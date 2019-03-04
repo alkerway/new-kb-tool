@@ -1,4 +1,6 @@
-from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+import sys
+
+from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog
 from PySide2.QtGui import QFont
 from PySide2 import QtCore
 
@@ -14,19 +16,71 @@ class MainWrapper(QWidget):
     def __init__(self):
         super(MainWrapper, self).__init__()
         self.buildUI()
-        csvParser = CSVParser()
-        csvParser.parseCsv('out.csv')
+
+    def showFileSelect(self):
+        fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
+        if success:
+            parser = CSVParser()
+            formatted = parser.parseCsv(fname)
+                # self.transactions = formatted
+                # self.sumTransactions = 0
+                # for t in self.transactions:
+                #     self.sumTransactions += float(t.amt)
+                # self.generateContentUI()
 
     def buildUI(self):
+        self.closeButton = QPushButton('close')
+        self.closeButton.setShortcut('Ctrl+W')
+        self.closeButton.clicked.connect(self.closeApp)
+        self.closeButton.setFixedSize(0, 0)
+
+        self.buildTitleLayout()
+        self.buildMonthDisplayLayout()
+        self.buildHeaderWidget()
+
+        self.mainWrapperLayout = QVBoxLayout()
+        self.mainWrapperLayout.addLayout(self.titleLayout)
+        self.mainWrapperLayout.addLayout(self.monthDisplayLayout)
+        self.mainWrapperLayout.addWidget(self.headerWidget)
+        self.mainWrapperLayout.addWidget(self.closeButton)
+
+        self.setLayout(self.mainWrapperLayout)
+
+        self.setMinimumWidth(450)
+
+    def buildTitleLayout(self):
         self.appTitle = QLabel(self)
         self.appTitle.setText("App Title")
         self.appTitle.setFont(boldFont)
 
         self.chooseFileButton = QPushButton("choose file")
-        # self.chooseFileButton.clicked.connect(self.showFileSelect)
+        self.chooseFileButton.clicked.connect(self.showFileSelect)
         self.chooseFileButton.setShortcut('Ctrl+O')
         self.chooseFileButton.setMaximumWidth(90)
 
+        self.titleLayout = QHBoxLayout()
+        self.titleLayout.addWidget(self.appTitle)
+        self.titleLayout.addWidget(self.chooseFileButton)
+
+    def buildMonthDisplayLayout(self):
+        self.monthTitle = QLabel(self)
+        self.monthTitle.setText('Month')
+        self.monthTitle.setMaximumWidth(75)
+        self.monthTitle.setAlignment(QtCore.Qt.AlignCenter)
+        self.monthIncreaseButton = QPushButton('>')
+        self.monthDecreaseButton = QPushButton('<')
+        self.monthIncreaseButton.setMaximumWidth(20)
+        self.monthDecreaseButton.setMaximumWidth(20)
+
+        self.monthDisplayWrapper = QHBoxLayout()
+        self.monthDisplayWrapper.addWidget(self.monthDecreaseButton)
+        self.monthDisplayWrapper.addWidget(self.monthTitle)
+        self.monthDisplayWrapper.addWidget(self.monthIncreaseButton)
+
+        self.monthDisplayLayout = QHBoxLayout()
+        self.monthDisplayLayout.addLayout(self.monthDisplayWrapper)
+
+    def buildHeaderWidget(self):
         self.categoriesTitle = QLabel(self)
         self.categoriesTitle.setText('Categories')
         self.categoriesTitle.setMaximumWidth(88)
@@ -43,9 +97,6 @@ class MainWrapper(QWidget):
         self.totalDisplay.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
         self.totalDisplay.setFont(boldFont)
 
-        self.titleLayout = QHBoxLayout()
-        self.titleLayout.addWidget(self.appTitle)
-        self.titleLayout.addWidget(self.chooseFileButton)
 
         self.headerLayout = QHBoxLayout()
         self.headerLayout.addWidget(self.categoriesTitle)
@@ -60,11 +111,6 @@ class MainWrapper(QWidget):
         minSize.setWidth(450)
         self.headerWidget.setMaximumSize(minSize)
 
-        self.mainWrapperLayout = QVBoxLayout()
-        self.mainWrapperLayout.addLayout(self.titleLayout)
-        self.mainWrapperLayout.addWidget(self.headerWidget)
-
-        self.setLayout(self.mainWrapperLayout)
-
-        self.setMinimumWidth(450)
+    def closeApp(self):
+        sys.exit()
 

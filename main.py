@@ -7,7 +7,7 @@ from kbwidgets import MainWrapper
 def main():
     app = QApplication(sys.argv)
     mainWindow = QMainWindow()
-    wrapper = MainWrapper(mainWindow)
+    wrapper = MainWrapper()
     mainWindow.setCentralWidget(wrapper)
     mainWindow.show()
 
