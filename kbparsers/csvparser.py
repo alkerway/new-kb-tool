@@ -1,4 +1,3 @@
-from datetime import date
 import re
 
 from kbutils import Transaction
@@ -17,11 +16,16 @@ class CSVParser():
         #     name = self.transactionNameMap[name]
         return name
 
-    def formatDate(self, dateStr):
-        day, month, year = dateStr.split('-')
-        transactionDate = date(int(year), int(month), int(day))
-        print(str(transactionDate.month))
-        return transactionDate
+    def separateByMonth(self, transactionList):
+        transactionMap = {}
+        for transaction in transactionList:
+            monthYear = str(transaction.date.month) + '-' + str(transaction.date.year)
+            if monthYear in transactionMap:
+                transactionMap[monthYear].append(transaction)
+            else:
+                transactionMap[monthYear] = [transaction]
+
+        return transactionMap
 
     def buildFullList(self, lines):
         transactions = []
@@ -30,7 +34,7 @@ class CSVParser():
             if re.search(self.dateMatch, values[self.dateIdx]):
                 description = self.formatDescription(values[self.descriptionIdx])
                 amountDebit = values[self.amountDebitIdx]
-                date = self.formatDate(values[self.dateIdx])
+                date = values[self.dateIdx]
                 amountCredit = values[self.amountCreditIdx]
                 newTransaction = Transaction(description, amountDebit, amountCredit, date)
                 transactions.append(newTransaction)
@@ -47,3 +51,6 @@ class CSVParser():
             self.dateIdx = titles.index('Date')
             self.descriptionIdx = titles.index('Memo/Description')
             allTransactions = self.buildFullList(lines[1:])
+            sortedTransactionsMap = self.separateByMonth(allTransactions)
+            print(sortedTransactionsMap)
+
