@@ -5,6 +5,7 @@ from PySide2.QtGui import QFont
 from PySide2 import QtCore
 
 from kbparsers import CSVParser
+from .datadisplay import DataDisplay
 
 boldFont = QFont()
 boldFont.setBold(True)
@@ -15,13 +16,14 @@ class MainWrapper(QWidget):
         super(MainWrapper, self).__init__()
         self.buildUI()
         self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        self.dataDisplay = DataDisplay()
 
     def showFileSelect(self):
         fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
         if success:
             parser = CSVParser()
-            formatted = parser.parseCsv(fname)
-            allMonths = list(formatted.keys())
+            self.transactionMap = parser.parseCsv(fname)
+            allMonths = list(self.transactionMap.keys())
             allMonths.sort()
             self.monthsList = allMonths
             self.currentMonth = allMonths[-1]
@@ -33,6 +35,8 @@ class MainWrapper(QWidget):
         monthNumber = int(monthText.split('-')[1])
         self.monthTitle.setText(self.monthNames[monthNumber - 1] + ' ' + monthText.split('-')[0])
         self.currentMonth = monthText
+        self.dataDisplay.loadNewMonth(self.transactionMap[self.currentMonth], self.currentMonth)
+        self.totalDisplay.setText(self.dataDisplay.getTotalAmt(self.transactionMap[self.currentMonth]))
 
     def loadPreviousMonth(self):
         currentIndex = self.monthsList.index(self.currentMonth)

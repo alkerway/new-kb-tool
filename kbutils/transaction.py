@@ -3,7 +3,8 @@ from datetime import date
 class Transaction:
     def __init__(self, name, amtDebit, amtCredit, date):
         self.name = name
-        self.amt = amtDebit or amtCredit
+        amt = amtDebit or amtCredit
+        self.amt = float(amt)
         self.date = self.formatDate(date)
         self.isCredit = not amtDebit
 

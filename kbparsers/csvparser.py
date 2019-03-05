@@ -37,7 +37,8 @@ class CSVParser():
                 date = values[self.dateIdx]
                 amountCredit = values[self.amountCreditIdx]
                 newTransaction = Transaction(description, amountDebit, amountCredit, date)
-                transactions.append(newTransaction)
+                if not newTransaction.isCredit or 'DOROSTK' not in newTransaction.name and 'LIVING EXPENSES' not in newTransaction.name:
+                    transactions.append(newTransaction)
 
         return transactions
 
