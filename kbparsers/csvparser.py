@@ -19,11 +19,11 @@ class CSVParser():
     def separateByMonth(self, transactionList):
         transactionMap = {}
         for transaction in transactionList:
-            monthYear = str(transaction.date.month) + '-' + str(transaction.date.year)
-            if monthYear in transactionMap:
-                transactionMap[monthYear].append(transaction)
+            yearMonth = str(transaction.date.year) + '-' + ('0' + str(transaction.date.month))[-2:]
+            if yearMonth in transactionMap:
+                transactionMap[yearMonth].append(transaction)
             else:
-                transactionMap[monthYear] = [transaction]
+                transactionMap[yearMonth] = [transaction]
 
         return transactionMap
 
@@ -52,5 +52,5 @@ class CSVParser():
             self.descriptionIdx = titles.index('Memo/Description')
             allTransactions = self.buildFullList(lines[1:])
             sortedTransactionsMap = self.separateByMonth(allTransactions)
-            print(sortedTransactionsMap)
+            return sortedTransactionsMap
 

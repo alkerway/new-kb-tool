@@ -5,8 +5,6 @@ from PySide2.QtGui import QFont
 from PySide2 import QtCore
 
 from kbparsers import CSVParser
-from .choosefilebutton import ChooseFileButton
-
 
 boldFont = QFont()
 boldFont.setBold(True)
@@ -16,17 +14,45 @@ class MainWrapper(QWidget):
     def __init__(self):
         super(MainWrapper, self).__init__()
         self.buildUI()
+        self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     def showFileSelect(self):
         fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
         if success:
             parser = CSVParser()
             formatted = parser.parseCsv(fname)
-                # self.transactions = formatted
-                # self.sumTransactions = 0
-                # for t in self.transactions:
-                #     self.sumTransactions += float(t.amt)
-                # self.generateContentUI()
+            allMonths = list(formatted.keys())
+            allMonths.sort()
+            self.monthsList = allMonths
+            self.currentMonth = allMonths[-1]
+            self.loadMonth(self.currentMonth)
+            if len(allMonths) > 1:
+                self.monthDecreaseButton.show()
+
+    def loadMonth(self, monthText):
+        monthNumber = int(monthText.split('-')[1])
+        self.monthTitle.setText(self.monthNames[monthNumber - 1] + ' ' + monthText.split('-')[0])
+        self.currentMonth = monthText
+
+    def loadPreviousMonth(self):
+        currentIndex = self.monthsList.index(self.currentMonth)
+        if currentIndex > 0:
+            newMonth = self.monthsList[currentIndex - 1]
+            self.loadMonth(newMonth)
+            self.monthIncreaseButton.show()
+            if currentIndex == 1:
+                self.monthDecreaseButton.hide()
+
+
+    def loadNextMonth(self):
+        currentIndex = self.monthsList.index(self.currentMonth)
+        if currentIndex < len(self.monthsList) - 1:
+            newMonth = self.monthsList[currentIndex + 1]
+            self.loadMonth(newMonth)
+            self.monthDecreaseButton.show()
+            if currentIndex == len(self.monthsList) - 2:
+                self.monthIncreaseButton.hide()
+
 
     def buildUI(self):
         self.closeButton = QPushButton('close')
@@ -64,13 +90,19 @@ class MainWrapper(QWidget):
 
     def buildMonthDisplayLayout(self):
         self.monthTitle = QLabel(self)
-        self.monthTitle.setText('Month')
-        self.monthTitle.setMaximumWidth(75)
+        self.currentMonth = 'Month'
+        self.monthTitle.setText(self.currentMonth)
+        self.monthTitle.setMaximumWidth(115)
         self.monthTitle.setAlignment(QtCore.Qt.AlignCenter)
+
         self.monthIncreaseButton = QPushButton('>')
+        self.monthIncreaseButton.clicked.connect(self.loadNextMonth)
         self.monthDecreaseButton = QPushButton('<')
+        self.monthDecreaseButton.clicked.connect(self.loadPreviousMonth)
         self.monthIncreaseButton.setMaximumWidth(20)
         self.monthDecreaseButton.setMaximumWidth(20)
+        self.monthIncreaseButton.hide()
+        self.monthDecreaseButton.hide()
 
         self.monthDisplayWrapper = QHBoxLayout()
         self.monthDisplayWrapper.addWidget(self.monthDecreaseButton)
