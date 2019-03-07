@@ -5,7 +5,9 @@ from PySide2.QtGui import QFont
 from PySide2 import QtCore
 
 from kbparsers import CSVParser
+from kbutils import clearLayout
 from .datadisplay import DataDisplay
+from .categorymodal import CategoryModal
 
 boldFont = QFont()
 boldFont.setBold(True)
@@ -14,9 +16,9 @@ boldFont.setPointSize(12)
 class MainWrapper(QWidget):
     def __init__(self):
         super(MainWrapper, self).__init__()
-        self.buildUI()
         self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        self.dataDisplay = DataDisplay()
+        # self.dataDisplay = DataDisplay()
+        self.buildUI()
 
     def showFileSelect(self):
         fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
@@ -35,8 +37,12 @@ class MainWrapper(QWidget):
         monthNumber = int(monthText.split('-')[1])
         self.monthTitle.setText(self.monthNames[monthNumber - 1] + ' ' + monthText.split('-')[0])
         self.currentMonth = monthText
-        self.dataDisplay.loadNewMonth(self.transactionMap[self.currentMonth], self.currentMonth)
+        clearLayout(self.dataDisplayWrapper)
+        self.dataDisplay = DataDisplay(self.transactionMap[self.currentMonth], self.currentMonth)
         self.totalDisplay.setText(self.dataDisplay.getTotalAmt(self.transactionMap[self.currentMonth]))
+        self.dataDisplayWrapper.addWidget(self.dataDisplay)
+        testWidget = QLabel()
+        testWidget.setText('lmao')
 
     def loadPreviousMonth(self):
         currentIndex = self.monthsList.index(self.currentMonth)
@@ -68,11 +74,14 @@ class MainWrapper(QWidget):
         self.buildMonthDisplayLayout()
         self.buildHeaderWidget()
 
+        self.dataDisplayWrapper = QHBoxLayout()
+
         self.mainWrapperLayout = QVBoxLayout()
         self.mainWrapperLayout.addLayout(self.titleLayout)
         self.mainWrapperLayout.addLayout(self.monthDisplayLayout)
         self.mainWrapperLayout.addWidget(self.headerWidget)
         self.mainWrapperLayout.addWidget(self.closeButton)
+        self.mainWrapperLayout.addLayout(self.dataDisplayWrapper)
 
         self.setLayout(self.mainWrapperLayout)
 
@@ -124,7 +133,7 @@ class MainWrapper(QWidget):
 
         self.categoriesAddButton = QPushButton('+')
         self.categoriesAddButton.setMaximumWidth(20)
-        # self.categoriesAddButton.clicked.connect(self.promptAddCategory)
+        self.categoriesAddButton.clicked.connect(self.promptAddCategory)
         self.categoriesAddButton.setToolTip('Add Category')
 
         self.sumTransactions = 0
@@ -146,6 +155,11 @@ class MainWrapper(QWidget):
         minSize = self.headerLayout.minimumSize()
         minSize.setWidth(450)
         self.headerWidget.setMaximumSize(minSize)
+
+    def promptAddCategory(self):
+        modal = CategoryModal()
+        data = modal.getData()
+        self.dataDisplay.addCategory(data)
 
     def closeApp(self):
         sys.exit()

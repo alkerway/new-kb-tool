@@ -1,4 +1,4 @@
-import yaml
+import yaml, sys
 
 class ConfigUtil():
     def getConfig(self):
@@ -21,6 +21,3 @@ class ConfigUtil():
     def setConfig(self, cfg):
         with open('config.yaml', 'w+') as stream:
             yaml.dump(cfg, stream)
-
-    def setConfig(self, config):
-        pass
