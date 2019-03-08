@@ -8,7 +8,7 @@ class TransactionLine(QWidget):
         self.transaction = transaction
 
         self.tTitle = QLabel(self)
-        self.tTitle.setText(transaction.name)
+        self.tTitle.setText(transaction.displayName)
         self.tTitle.setMinimumWidth(290)
 
         tAmt = QLabel(self)
@@ -31,7 +31,7 @@ class TransactionLine(QWidget):
         self.setCursor(QtCore.Qt.OpenHandCursor)
 
     def updateName(self, newName):
-        self.transaction.name = newName
+        self.transaction.displayName = newName
         self.tTitle.setText(newName)
 
     def mouseMoveEvent(self, event):

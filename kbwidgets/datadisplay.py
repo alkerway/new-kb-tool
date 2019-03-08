@@ -26,7 +26,7 @@ class DataDisplay(QWidget):
                 break
 
         self.sectionState.insert(idx, {'name': data['title'], 'total': amt})
-        self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, []))
+        self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self))
         # self.updateTotalAmt()
 
     def loadNewMonth(self, transactionList, monthCode, disableCredit=False):
@@ -79,10 +79,10 @@ class DataDisplay(QWidget):
               pass
             elif category == 'uncategorized':
                 self.sectionState.append({'name': 'Uncategorized', 'total': '0'})
-                sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList']))
+                sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList'], self))
             else:
                 self.sectionState.append({'name': category, 'total': config['months'][monthCode][category]['total']})
-                sectionsUI.append(Category(category, config['months'][monthCode][category]['total'], formattedSections[category]['tList']))
+                sectionsUI.append(Category(category, config['months'][monthCode][category]['total'], formattedSections[category]['tList'], self))
 
         self.contentWrapperLayout = QVBoxLayout()
         for sectionLayout in sectionsUI:
@@ -90,33 +90,77 @@ class DataDisplay(QWidget):
             self.contentWrapperLayout.addWidget(sectionLayout)
         print(self.contentWrapperLayout, 'wrapperlayout')
         self.setLayout(self.contentWrapperLayout)
-        print(config)
         self.configUtil.setConfig(config)
 
-    def dropEvent(self, transactionTitle):
+    def dropEvent(self, transactionTitle, destCategoryTitle):
         cfg = self.configUtil.getConfig()
         sourceCat = self.getCategoryFromTransaction(cfg, transactionTitle)
-        print(sourceCat)
-        if not len(sourceCat) or sourceCat[0] != self.title:
+        if not len(sourceCat) or sourceCat[0] != destCategoryTitle:
             transactionsToAdd = []
             if len(sourceCat):
                 oldList = cfg['months'][self.month][sourceCat[0]]['transactionList']
                 newList = list(filter((transactionTitle).__ne__, oldList))
                 cfg['months'][self.month][sourceCat[0]]['transactionList'] = newList
-                # transactionsToAdd += self.wrapper.removeTransactionsFromCategory(transactionTitle, sourceCat[0])
+                transactionsToAdd += self.removeTransactionsFromCategory(transactionTitle, sourceCat[0])
             else:
-                pass
-                # transactionsToAdd += self.wrapper.removeTransactionsFromCategory(transactionTitle, 'Uncategorized')
+                transactionsToAdd += self.removeTransactionsFromCategory(transactionTitle, 'Uncategorized')
 
-            if self.title != 'Uncategorized':
-                cfg['categories'][self.title]['transactionList'].append(transactionTitle)
+            if destCategoryTitle != 'Uncategorized':
+                cfg['months'][self.month][destCategoryTitle]['transactionList'].append(transactionTitle)
 
             self.configUtil.setConfig(cfg)
-            # self.addTransactions(transactionsToAdd)
+            categoryToAddTo = self.getCategoryWidget(destCategoryTitle)
+            categoryToAddTo.addTransactions(transactionsToAdd)
+
+    def removeTransactionsFromCategory(self, transactionTitle, title):
+        i = 0
+        transactionsRemoved = []
+        curWidget = self.getCategoryWidget(title)
+        j = 0
+        while j < len(curWidget.transactions):
+            widgetTransaction = curWidget.transactions[j]
+            if widgetTransaction.name == transactionTitle:
+                transactionsRemoved.append(widgetTransaction)
+                curWidget.removeTransaction(widgetTransaction)
+            else:
+                j += 1
+
+        return transactionsRemoved
+
+    def getCategoryWidget(self, categoryName):
+        i = 0
+        curWidget = self.contentWrapperLayout.itemAt(i)
+        while (curWidget):
+            if curWidget.widget().name == categoryName:
+                return curWidget.widget()
+            i += 1
+            curWidget = self.contentWrapperLayout.itemAt(i)
 
     def getCategoryFromTransaction(self, cfg, title):
         category = list(filter(lambda x: title in cfg['months'][self.month][x]['transactionList'], cfg['months'][self.month].keys()))
         return category
+
+    def removeCategory(self, title, transactionList):
+        cfg = self.configUtil.getConfig()
+
+        amt = cfg['months'][self.month][title]['total']
+        del cfg['months'][self.month][title]
+
+        self.configUtil.setConfig(cfg)
+        i = 0
+        curWidget = self.contentWrapperLayout.itemAt(i)
+        while (curWidget):
+            if curWidget.widget().name == title:
+                curWidget.widget().deleteLater()
+                self.contentWrapperLayout.removeWidget(curWidget.widget())
+                self.sectionState.remove({'name': title, 'total': amt})
+            elif curWidget.widget().name == 'Uncategorized':
+                curWidget.widget().addTransactions(transactionList)
+                i += 1
+            else:
+                i += 1
+            curWidget = self.contentWrapperLayout.itemAt(i)
+        # self.updateTotalAmt()
 
 
     def getTotalAmt(self, transactionList):

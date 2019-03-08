@@ -7,10 +7,11 @@ from .transactionline import TransactionLine
 from kbutils import clearLayout
 
 class Category(QWidget):
-    def __init__(self, name, categoryTotal, transactions):
+    def __init__(self, name, categoryTotal, transactions, dataDisplay):
         QWidget.__init__(self)
+        self.dataDisplay = dataDisplay
         self.name = name
-        self.transactions = transactions
+        self.transactions = []
         self.categoryTotal = categoryTotal
         self.collapsed = False
 
@@ -20,7 +21,7 @@ class Category(QWidget):
         self.progressBar = ProgressBar()
 
         self.addHeader()
-        self.addBody()
+        self.addBody(transactions)
         self.setLayout(self.sectionLayout)
         self.setAcceptDrops(True)
 
@@ -60,9 +61,9 @@ class Category(QWidget):
 
         self.sectionLayout.addLayout(header)
 
-    def addBody(self):
+    def addBody(self, transactions):
         self.transactionGrid = QVBoxLayout()
-        self.addTransactions(self.transactions)
+        self.addTransactions(transactions)
 
     def addTransactions(self, transactions):
         self.transactions += transactions
@@ -94,8 +95,14 @@ class Category(QWidget):
         self.sectionLayout.setMargin(0)
 
         self.updateAmtDisplay()
-        if self.name != 'Uncategorized':
-            self.toggleCollapsed(None)
+        # if self.name != 'Uncategorized':
+        #     self.toggleCollapsed(None)
+
+    def removeTransaction(self, transaction):
+        newTransactions = self.transactions
+        newTransactions.remove(transaction)
+        self.transactions = []
+        self.addTransactions(newTransactions)
 
     def updateAmtDisplay(self):
         totalAmount = 0
@@ -119,7 +126,7 @@ class Category(QWidget):
         editAction = QAction('Edit Name')
         # editAction.triggered.connect(self.editTitle)
         removeAction = QAction('Remove Category')
-        # removeAction.triggered.connect(self.removeCategory)
+        removeAction.triggered.connect(self.removeCategory)
 
         menu.addAction(editAction)
         menu.addAction(removeAction)
@@ -148,6 +155,9 @@ class Category(QWidget):
         if event.mimeData().hasText():
             transactionTitle = event.mimeData().text()
             print(transactionTitle)
-            # self.dataDisplay.dropEvent(transactionTitle)
+            self.dataDisplay.dropEvent(transactionTitle, self.name)
+
+    def removeCategory(self):
+        self.dataDisplay.removeCategory(self.name, self.transactions)
 
 

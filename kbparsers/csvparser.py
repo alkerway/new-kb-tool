@@ -32,11 +32,12 @@ class CSVParser():
         for line in lines:
             values = line.split(',')
             if re.search(self.dateMatch, values[self.dateIdx]):
-                description = self.formatDescription(values[self.descriptionIdx])
+                displayName = self.formatDescription(values[self.descriptionIdx])
+                description = values[self.descriptionIdx]
                 amountDebit = values[self.amountDebitIdx]
                 date = values[self.dateIdx]
                 amountCredit = values[self.amountCreditIdx]
-                newTransaction = Transaction(description, amountDebit, amountCredit, date)
+                newTransaction = Transaction(displayName, amountDebit, amountCredit, date, description)
                 if not newTransaction.isCredit or 'DOROSTK' not in newTransaction.name and 'LIVING EXPENSES' not in newTransaction.name:
                     transactions.append(newTransaction)
 

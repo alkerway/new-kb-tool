@@ -1,8 +1,9 @@
 from datetime import date
 
 class Transaction:
-    def __init__(self, name, amtDebit, amtCredit, date):
-        self.name = name
+    def __init__(self, displayName, amtDebit, amtCredit, date, description):
+        self.name = description
+        self.displayName = displayName
         amt = amtDebit or amtCredit
         self.amt = float(amt)
         self.date = self.formatDate(date)
