@@ -2,4 +2,4 @@ from .mainwrapper import MainWrapper
 from .datadisplay import DataDisplay
 from .category import Category
 from .transactionline import TransactionLine
-from .categorymodal import CategoryModal
+from kbwidgets.modals.categorymodal import CategoryModal

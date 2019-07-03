@@ -7,7 +7,7 @@ from PySide2 import QtCore
 from kbparsers import CSVParser
 from kbutils import clearLayout
 from .datadisplay import DataDisplay
-from .categorymodal import CategoryModal
+from kbwidgets.modals import CategoryModal
 
 boldFont = QFont()
 boldFont.setBold(True)

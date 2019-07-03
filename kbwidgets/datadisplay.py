@@ -97,6 +97,11 @@ class DataDisplay(QWidget):
         cfg['months'][self.month][name]['total'] = amt
         self.configUtil.setConfig(cfg)
 
+    def updateConfigCategoryName(self, name, newTitle):
+        cfg = self.configUtil.getConfig()
+        cfg['months'][self.month][newTitle] = cfg['months'][self.month].pop(name)
+        self.configUtil.setConfig(cfg)
+
     def dropEvent(self, transactionTitle, destCategoryTitle):
         cfg = self.configUtil.getConfig()
         sourceCat = self.getCategoryFromTransaction(cfg, transactionTitle)

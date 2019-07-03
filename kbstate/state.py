@@ -14,8 +14,8 @@ class State:
                 self.events[eventName].removeAllSubscribers()
                 del self.events[eventName]
 
-    def next(self, eventName, data):
+    def next(self, eventName, **args):
         if eventName in self.events:
-            self.events[eventName].fire(data)
+            self.events[eventName].fire(**args)
         else:
             print('no event found to fire')

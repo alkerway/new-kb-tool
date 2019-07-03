@@ -17,19 +17,15 @@ months:
   2019-04: {}
   2019-05: {}
   2019-06:
-    groceries:
-      total: 340
-      transactionList: [COUNTDOWN AKL METRO AUCKLAND ;]
-    hair:
-      total: 70
-      transactionList: ['POS W/D BARKERS GROOM-13:21 ;', VODAFONE PREPAY VISA MCAUCKLAND
-          ;]
-    out:
+    frivolity:
       total: 150
       transactionList: [BARILLA DUMPLING AUCKLAND ;, THE WHITE LADY AUCKLAND ;, THE
           SHELF AUCKLAND ;, SOUTHERN MAID DONUTS AUCKLAND ;, PAY Monica ;, MUNCHY
           MART LIMITED AUCKLAND ;, BURGER FUEL PARNELL AUCKLAND ;, FUTURE CLUB AUCKLAND
           ;, 'ATM W/D Victoria St W-01:19 ;']
+    groceries:
+      total: 340
+      transactionList: [COUNTDOWN AKL METRO AUCKLAND ;]
     rent:
       total: 1048
       transactionList: [UOA ACCOMMODATION AUCKLAND ;]
@@ -47,6 +43,10 @@ months:
       total: 30
       transactionList: [LIM 8885463345 CA ;, OLACABS RIDE PAYMENT AUCKLAND ;, AT HOP
           AUCKLAND HENDERSON ;]
+    upkeep:
+      total: 70
+      transactionList: ['POS W/D BARKERS GROOM-13:21 ;', VODAFONE PREPAY VISA MCAUCKLAND
+          ;]
     visa renewal:
       total: 35
       transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,

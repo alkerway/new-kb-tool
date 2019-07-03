@@ -4,7 +4,7 @@ from PySide2.QtGui import QCursor
 
 from .progressbar import ProgressBar
 from .transactionline import TransactionLine
-from .editcategorytotalmodal import EditCategoryTotalModal
+from kbwidgets.modals import EditCategoryTotalModal, EditTextModal
 from kbutils import clearLayout
 
 class Category(QWidget):
@@ -125,7 +125,7 @@ class Category(QWidget):
     def titleContextMenu(self, event):
         menu = QMenu(self)
         editAction = QAction('Edit Name')
-        # editAction.triggered.connect(self.editTitle)
+        editAction.triggered.connect(self.promptEditTitle)
         removeAction = QAction('Remove Category')
         removeAction.triggered.connect(self.removeCategory)
 
@@ -168,3 +168,11 @@ class Category(QWidget):
             self.dataDisplay.updateConfigCategoryTotal(self.name, int(data))
             self.categoryTotal = int(data)
             self.updateAmtDisplay()
+
+    def promptEditTitle(self):
+        modal = EditTextModal(self.name, 'Edit Title')
+        data = modal.getData()
+        if data:
+            self.dataDisplay.updateConfigCategoryName(self.name, data)
+            self.name = data
+            self.headerText.setText(self.name)
