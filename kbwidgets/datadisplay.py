@@ -4,10 +4,10 @@ from kbutils import ConfigUtil
 from .category import Category
 
 class DataDisplay(QWidget):
-    def __init__(self, transactionList, monthCode):
+    def __init__(self, state, transactionList, monthCode):
         QWidget.__init__(self)
         self.allTransactions = []
-        self.configUtil = ConfigUtil()
+        self.configUtil = ConfigUtil(state)
         self.loadNewMonth(transactionList, monthCode)
 
     def addCategory(self, data):

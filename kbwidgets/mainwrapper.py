@@ -6,8 +6,9 @@ from PySide2 import QtCore
 
 from kbparsers import CSVParser
 from kbutils import clearLayout
-from .datadisplay import DataDisplay
 from kbwidgets.modals import CategoryModal
+from .datadisplay import DataDisplay
+from kbstate import State
 
 boldFont = QFont()
 boldFont.setBold(True)
@@ -17,7 +18,7 @@ class MainWrapper(QWidget):
     def __init__(self):
         super(MainWrapper, self).__init__()
         self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        # self.dataDisplay = DataDisplay()
+        self.state = State()
         self.buildUI()
 
     def showFileSelect(self):
@@ -38,7 +39,7 @@ class MainWrapper(QWidget):
         self.monthTitle.setText(self.monthNames[monthNumber - 1] + ' ' + monthText.split('-')[0])
         self.currentMonth = monthText
         clearLayout(self.dataDisplayWrapper)
-        self.dataDisplay = DataDisplay(self.transactionMap[self.currentMonth], self.currentMonth)
+        self.dataDisplay = DataDisplay(self.state, self.transactionMap[self.currentMonth], self.currentMonth)
         self.totalDisplay.setText(self.dataDisplay.getTotalAmt(self.transactionMap[self.currentMonth]))
         self.dataDisplayWrapper.addWidget(self.dataDisplay)
         testWidget = QLabel()
