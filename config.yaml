@@ -2,11 +2,54 @@ months:
   2019-01: {}
   2019-02:
     Uni payments:
-      total: 1900
+      total: 18097
       transactionList: [PAY UNIVERSITY OF AUCKLAND - STUDENT PAYMENTS ;075334DpsA2A
-          UoA A2A 2487]
+          UoA A2A 2487, PAY UNIVERSITY OF AUCKLAND - STUDENT PAYMENTS ;075334DpsA2A
+          UoA A2A 248706]
   2019-03:
-    Liquor:
-      total: 42
-      transactionList: [CHEERS LIQUOR...]
+    Food:
+      total: 250
+      transactionList: [COUNTDOWN AKL METRO AUCKLAND ;, 'POS W/D CHEERS LIQUOR-16:54
+          ;']
+    Phone:
+      total: 20
+      transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;]
+  2019-04: {}
+  2019-05: {}
+  2019-06:
+    groceries:
+      total: 340
+      transactionList: [COUNTDOWN AKL METRO AUCKLAND ;]
+    hair:
+      total: 70
+      transactionList: ['POS W/D BARKERS GROOM-13:21 ;', VODAFONE PREPAY VISA MCAUCKLAND
+          ;]
+    out:
+      total: 150
+      transactionList: [BARILLA DUMPLING AUCKLAND ;, THE WHITE LADY AUCKLAND ;, THE
+          SHELF AUCKLAND ;, SOUTHERN MAID DONUTS AUCKLAND ;, PAY Monica ;, MUNCHY
+          MART LIMITED AUCKLAND ;, BURGER FUEL PARNELL AUCKLAND ;, FUTURE CLUB AUCKLAND
+          ;, 'ATM W/D Victoria St W-01:19 ;']
+    rent:
+      total: 1048
+      transactionList: [UOA ACCOMMODATION AUCKLAND ;]
+    sth island:
+      total: 585
+      transactionList: [NPD GREEN ISLAND NPD GREEN ISLAND ;, FOUR SQUARE MACKENZIE
+          TWIZEL ;, TWL 220 RICCARTON RICCARTON ;, FOUR SQUARE TE ANAU TE ANAU ;,
+        'POS W/D DF SOUVENIRS -15:44 ;', PIG & WHISTLE QUEENSTOWN ;, KAWARAU JET LTD
+          QUEENSTOWN ;, QUEENSTOWN AIRPORT QUEENSTOWN ;, SNAKE BITE BREWERY FRANZ
+          JOSEF G ;, RELAY CHRISTCHURCH ;, MOBIL BULLS BULLS ;, GEOZONE AUCKLAND ;,
+        KIWI FUELS LTD KIWI FUELS LTD ;, TWL 141 HAMILTON HAMILTON ;, NEW WORLD FOXTON
+          FOXTON ;, 'POS W/D MASTER CHEF K-16:44 ;', CASH WITHDRAWAL ;, JUCY RENTALS
+          NZ LIMITEDAUK ;]
+    transport:
+      total: 30
+      transactionList: [LIM 8885463345 CA ;, OLACABS RIDE PAYMENT AUCKLAND ;, AT HOP
+          AUCKLAND HENDERSON ;]
+    visa renewal:
+      total: 35
+      transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,
+        'TRANSACTION PRINTOUT FEE #38 9019 0725301 00 ;']
+  2019-07: {}
 transactionNameMap: {}

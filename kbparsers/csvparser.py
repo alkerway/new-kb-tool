@@ -14,7 +14,7 @@ class CSVParser():
 
         # if name in self.transactionNameMap:
         #     name = self.transactionNameMap[name]
-        return name
+        return name[:35]
 
     def separateByMonth(self, transactionList):
         transactionMap = {}
@@ -48,6 +48,7 @@ class CSVParser():
         with open(csvFileName, 'r') as contents:
             lines = contents.read().splitlines()
             titles = lines[0].split(',')
+            print(titles)
             self.amountDebitIdx = titles.index('Amount (debit)')
             self.amountCreditIdx = titles.index('Amount (credit)')
             self.dateIdx = titles.index('Date')

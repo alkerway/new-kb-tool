@@ -4,6 +4,7 @@ from PySide2.QtGui import QCursor
 
 from .progressbar import ProgressBar
 from .transactionline import TransactionLine
+from .editcategorytotalmodal import EditCategoryTotalModal
 from kbutils import clearLayout
 
 class Category(QWidget):
@@ -41,7 +42,7 @@ class Category(QWidget):
 
         self.progressBar = ProgressBar()
         self.progressBar.setCursor(Qt.PointingHandCursor)
-        # self.progressBar.mousePressEvent = lambda event: self.wrapper.promptEditVal(self.name, self.categoryAmount)
+        self.progressBar.mousePressEvent = lambda event: self.promptEditVal(self.name, self.categoryTotal)
         self.progressBar.setToolTip('Edit Max')
 
         self.uncategorizedAmtDisplay = QLabel()
@@ -160,4 +161,10 @@ class Category(QWidget):
     def removeCategory(self):
         self.dataDisplay.removeCategory(self.name, self.transactions)
 
-
+    def promptEditVal(self, title, currentAmount):
+        modal = EditCategoryTotalModal()
+        data = modal.getData(currentAmount)
+        if data:
+            self.dataDisplay.updateConfigCategoryTotal(self.name, int(data))
+            self.categoryTotal = int(data)
+            self.updateAmtDisplay()
