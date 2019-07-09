@@ -15,7 +15,7 @@ class EditCategoryTotalModal(QDialog):
         amtTitle = QLabel('Total: $')
         amtTitle.setMaximumWidth(120)
 
-        validator = QIntValidator(1, 9999, self)
+        validator = QIntValidator(1, 99999, self)
 
         amtEdit = QLineEdit()
         amtEdit.setValidator(validator)

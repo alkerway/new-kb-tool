@@ -6,12 +6,13 @@ from .progressbar import ProgressBar
 from .transactionline import TransactionLine
 from kbwidgets.modals import EditCategoryTotalModal, EditTextModal
 from kbutils import clearLayout
+from kbstate import Events
 
 class Category(QWidget):
-    def __init__(self, name, categoryTotal, transactions, dataDisplay):
+    def __init__(self, name, categoryTotal, transactions, state):
         QWidget.__init__(self)
-        self.dataDisplay = dataDisplay
         self.name = name
+        self.state = state
         self.transactions = []
         self.categoryTotal = categoryTotal
         self.collapsed = False
@@ -155,17 +156,16 @@ class Category(QWidget):
     def dropEvent(self, event):
         if event.mimeData().hasText():
             transactionTitle = event.mimeData().text()
-            print(transactionTitle)
-            self.dataDisplay.dropEvent(transactionTitle, self.name)
+            self.state.next(Events.transaction_drop_event, transactionTitle, self.name)
 
     def removeCategory(self):
-        self.dataDisplay.removeCategory(self.name, self.transactions)
+        self.state.next(Events.remove_category, self.name, self.transactions)
 
     def promptEditVal(self, title, currentAmount):
         modal = EditCategoryTotalModal()
         data = modal.getData(currentAmount)
         if data:
-            self.dataDisplay.updateConfigCategoryTotal(self.name, int(data))
+            self.state.next(Events.update_category_total, self.name, int(data))
             self.categoryTotal = int(data)
             self.updateAmtDisplay()
 
@@ -173,6 +173,6 @@ class Category(QWidget):
         modal = EditTextModal(self.name, 'Edit Title')
         data = modal.getData()
         if data:
-            self.dataDisplay.updateConfigCategoryName(self.name, data)
+            self.state.next(Events.update_category_title, self.name, data)
             self.name = data
             self.headerText.setText(self.name)

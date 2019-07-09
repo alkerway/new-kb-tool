@@ -1,23 +1,30 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout
 
-from kbutils import ConfigUtil
+from kbstate import Events
 from .category import Category
 
 class DataDisplay(QWidget):
     def __init__(self, state, transactionList, monthCode):
         QWidget.__init__(self)
         self.allTransactions = []
-        self.configUtil = ConfigUtil(state)
+        self.state = state
+        self.addListeners()
         self.loadNewMonth(transactionList, monthCode)
 
+    def addListeners(self):
+        self.state.addSubscriber(Events.transaction_drop_event, self.dropEvent)
+        self.state.addSubscriber(Events.remove_category, self.removeCategory)
+        self.state.addSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
+        self.state.addSubscriber(Events.update_category_title, self.updateConfigCategoryName)
+
     def addCategory(self, data):
-        cfg = self.configUtil.getConfig()
+        cfg = self.state.getConfig()
         amt = int(data['amt'])
         cfg['months'][self.month][data['title']] = {
             'transactionList': [],
             'total': amt
         }
-        self.configUtil.setConfig(cfg)
+        self.state.setConfig(cfg)
 
         idx = -1
         for i, section in enumerate(self.sectionState):
@@ -26,7 +33,7 @@ class DataDisplay(QWidget):
                 break
 
         self.sectionState.insert(idx, {'name': data['title'], 'total': amt})
-        self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self))
+        self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self.state))
         # self.updateTotalAmt()
 
     def loadNewMonth(self, transactionList, monthCode, disableCredit=False):
@@ -35,7 +42,7 @@ class DataDisplay(QWidget):
         self.constructCategories(transactionList, monthCode)
 
     def constructCategories(self, transactionList, monthCode):
-        config = self.configUtil.getConfig()
+        config = self.state.getConfig()
         if not monthCode in config['months']:
             config['months'][monthCode] = {}
 
@@ -79,31 +86,33 @@ class DataDisplay(QWidget):
               pass
             elif category == 'uncategorized':
                 self.sectionState.append({'name': 'Uncategorized', 'total': '0'})
-                sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList'], self))
+                sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList'], self.state))
             else:
                 self.sectionState.append({'name': category, 'total': config['months'][monthCode][category]['total']})
-                sectionsUI.append(Category(category, config['months'][monthCode][category]['total'], formattedSections[category]['tList'], self))
+                sectionsUI.append(Category(category, config['months'][monthCode][category]['total'], formattedSections[category]['tList'], self.state))
 
         self.contentWrapperLayout = QVBoxLayout()
         for sectionLayout in sectionsUI:
-            print(sectionLayout)
             self.contentWrapperLayout.addWidget(sectionLayout)
-        print(self.contentWrapperLayout, 'wrapperlayout')
         self.setLayout(self.contentWrapperLayout)
-        self.configUtil.setConfig(config)
+        self.state.setConfig(config)
 
     def updateConfigCategoryTotal(self, name, amt):
-        cfg = self.configUtil.getConfig()
+        cfg = self.state.getConfig()
         cfg['months'][self.month][name]['total'] = amt
-        self.configUtil.setConfig(cfg)
+        self.state.setConfig(cfg)
 
     def updateConfigCategoryName(self, name, newTitle):
-        cfg = self.configUtil.getConfig()
+        cfg = self.state.getConfig()
+        print(cfg)
+        print(self.month)
+        print()
+        print(cfg['months'][self.month])
         cfg['months'][self.month][newTitle] = cfg['months'][self.month].pop(name)
-        self.configUtil.setConfig(cfg)
+        self.state.setConfig(cfg)
 
     def dropEvent(self, transactionTitle, destCategoryTitle):
-        cfg = self.configUtil.getConfig()
+        cfg = self.state.getConfig()
         sourceCat = self.getCategoryFromTransaction(cfg, transactionTitle)
         if not len(sourceCat) or sourceCat[0] != destCategoryTitle:
             transactionsToAdd = []
@@ -118,7 +127,7 @@ class DataDisplay(QWidget):
             if destCategoryTitle != 'Uncategorized':
                 cfg['months'][self.month][destCategoryTitle]['transactionList'].append(transactionTitle)
 
-            self.configUtil.setConfig(cfg)
+            self.state.setConfig(cfg)
             categoryToAddTo = self.getCategoryWidget(destCategoryTitle)
             categoryToAddTo.addTransactions(transactionsToAdd)
 
@@ -151,12 +160,12 @@ class DataDisplay(QWidget):
         return category
 
     def removeCategory(self, title, transactionList):
-        cfg = self.configUtil.getConfig()
+        cfg = self.state.getConfig()
 
         amt = cfg['months'][self.month][title]['total']
         del cfg['months'][self.month][title]
 
-        self.configUtil.setConfig(cfg)
+        self.state.setConfig(cfg)
         i = 0
         curWidget = self.contentWrapperLayout.itemAt(i)
         while (curWidget):

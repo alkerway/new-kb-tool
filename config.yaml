@@ -15,7 +15,34 @@ months:
       total: 20
       transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;]
   2019-04: {}
-  2019-05: {}
+  2019-05:
+    Tuition:
+      total: 18252
+      transactionList: [PAY UNIVERSITY OF AUCKLAND - STUDENT PAYMENTS ;084743DpsA2A
+          UoA A2A 270461]
+    frivolity:
+      total: 250
+      transactionList: ['POS W/D FAT CAMEL HOS-20:39 ;', 'POS W/D FAT CAMEL HOS-21:03
+          ;', BARILLA DUMPLING AUCKLAND ;, BURGER FUEL PARNELL AUCKLAND ;, HA POKE
+          AUCKLAND ;, 'POS W/D FAT CAMEL HOS-20:34 ;', 'POS W/D FAT CAMEL HOS-20:57
+          ;', 'POS W/D SHADOWS BAR S-21:45 ;', JAPAN MART CITY CENTRALAUCKLAND ;,
+        MUNCHY MART LIMITED AUCKLAND ;, FUREIN ASIAN AUCKLAND ;, THE WHITE LADY AUCKLAND
+          ;, PAY Annie ;, 'POS W/D ZAM ZAM TRADI-13:25 ;', 'POS W/D TRIPLE 5 TRAD-13:22
+          ;']
+    groceries:
+      total: 430
+      transactionList: [COUNTDOWN AKL CENTRAL AUCKLAND ;, COUNTDOWN AKL METRO AUCKLAND
+          ;, 'POS W/D TAI PING TRAD-13:59 ;', TWL 221 ATRIUM AUCKLAND ;]
+    rent:
+      total: 1800
+      transactionList: [UOA ACCOMMODATION AUCKLAND ;]
+    sth island:
+      total: 300
+      transactionList: [JETSTAR AUCKLAND ;]
+    upkeep:
+      total: 60
+      transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;, PAY Samuel Fonacier ;,
+        UNIVERSITY BOOK SHOP AUCKLAND ;]
   2019-06:
     frivolity:
       total: 150

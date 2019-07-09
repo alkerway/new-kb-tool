@@ -1,10 +1,5 @@
 import yaml, sys
-from kbstate import Events
-
 class ConfigUtil():
-    def  __init__(self, state):
-        state.addSubscriber(Events.set_config, self.setConfig)
-
     def getConfig(self):
         try:
             with open('config.yaml', 'r') as stream:

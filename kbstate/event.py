@@ -16,6 +16,6 @@ class Event:
         else:
             print('no matching subscriber found to remove')
 
-    def fire(self, *args, **kwargs):
+    def fire(self, *args):
         for f in self.subscribers:
-            f(*args, **kwargs)
+            f(*args)

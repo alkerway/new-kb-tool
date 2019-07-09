@@ -25,7 +25,7 @@ class CategoryModal(QDialog):
         self.amtEdit = QLineEdit()
         self.amtEditSs = self.amtEdit.styleSheet()
         self.amtEdit.textChanged.connect(lambda text: self.amtEdit.setStyleSheet(self.amtEditSs))
-        validator = QIntValidator(1, 9999, self)
+        validator = QIntValidator(1, 99999, self)
         self.amtEdit.setValidator(validator)
         amtTitle.setMaximumWidth(120)
         self.amtEdit.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)

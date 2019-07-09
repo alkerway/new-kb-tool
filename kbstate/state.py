@@ -1,10 +1,17 @@
-from kbstate import Event, Events
+from .eventnames import Events
+from kbstate import Event
+from kbutils import ConfigUtil
 
 class State:
     def __init__(self):
+        self.config = ConfigUtil()
         self.events = {}
         eventslist = [
-            Events.set_config
+            'set_config',
+            'transaction_drop_event',
+            'remove_category',
+            'update_category_total',
+            'update_category_title'
         ]
         for event in eventslist:
             self.addEvent(event)
@@ -22,8 +29,14 @@ class State:
     def addSubscriber(self, eventName, subscriberFn):
         self.events[eventName].addSubscriber(subscriberFn)
 
-    def next(self, eventName, **args):
+    def next(self, eventName, *args):
         if eventName in self.events:
-            self.events[eventName].fire(**args)
+            self.events[eventName].fire(*args)
         else:
             print('no event found to fire')
+
+    def getConfig(self):
+        return self.config.getConfig()
+
+    def setConfig(self, cfg):
+        self.config.setConfig(cfg)
