@@ -41,7 +41,7 @@ class Category(QWidget):
         self.collapseButton.setToolTip('collapse')
         self.collapseButton.mousePressEvent = self.toggleCollapsed
 
-        self.progressBar = ProgressBar()
+        self.progressBar = ProgressBar(self.name == 'Income')
         self.progressBar.setCursor(Qt.PointingHandCursor)
         self.progressBar.mousePressEvent = lambda event: self.promptEditVal(self.name, self.categoryTotal)
         self.progressBar.setToolTip('Edit Max')
@@ -56,8 +56,9 @@ class Category(QWidget):
 
         if self.name != 'Uncategorized':
             header.addWidget(self.progressBar)
-            self.headerText.setContextMenuPolicy(Qt.CustomContextMenu)
-            self.connect(self.headerText, SIGNAL('customContextMenuRequested(const QPoint &)'), self.titleContextMenu)
+            if self.name != 'Income':
+                self.headerText.setContextMenuPolicy(Qt.CustomContextMenu)
+                self.connect(self.headerText, SIGNAL('customContextMenuRequested(const QPoint &)'), self.titleContextMenu)
         else:
             header.addWidget(self.uncategorizedAmtDisplay)
 

@@ -8,17 +8,19 @@ animate = False
 
 
 class ProgressBar(QProgressBar):
-    def __init__(self):
+    def __init__(self, isIncome=False):
         QProgressBar.__init__(self)
         self.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self.setMaximumWidth(300)
+        self.isIncome = isIncome
 
     def updateValues(self, maxVal, value):
         oldValue = max(self.value(), 0)
         palette = QPalette(self.palette())
-        if value <= int(maxVal):
+        greenColor = value > int(maxVal) if not self.isIncome else value < int(maxVal)
+        if not greenColor:
             palette.setColor(QPalette.Highlight, QColor(Qt.darkGreen))
-        elif value > int(maxVal):
+        else:
             palette.setColor(QPalette.Highlight, QColor(Qt.darkRed))
         self.setPalette(palette)
         self.setRange(0, max(value, int(maxVal)))

@@ -50,14 +50,17 @@ months:
           SHELF AUCKLAND ;, SOUTHERN MAID DONUTS AUCKLAND ;, PAY Monica ;, MUNCHY
           MART LIMITED AUCKLAND ;, BURGER FUEL PARNELL AUCKLAND ;, FUTURE CLUB AUCKLAND
           ;, 'ATM W/D Victoria St W-01:19 ;']
+    Income:
+      total: 442
+      transactionList: []
     groceries:
-      total: 250
+      total: 340
       transactionList: [COUNTDOWN AKL METRO AUCKLAND ;]
     rent:
       total: 875
       transactionList: [UOA ACCOMMODATION AUCKLAND ;]
     transport:
-      total: 30
+      total: 60
       transactionList: [LIM 8885463345 CA ;, OLACABS RIDE PAYMENT AUCKLAND ;, AT HOP
           AUCKLAND HENDERSON ;]
     trips:
@@ -78,5 +81,12 @@ months:
       total: 35
       transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,
         'TRANSACTION PRINTOUT FEE #38 9019 0725301 00 ;']
-  2019-07: {}
+  2019-07:
+    Fuel:
+      total: 96
+      transactionList: [Z MATAMATA Z MATAMATA ;, GULL KINGSLAND SPEEDLANE GULL KINGSLAN
+          ;]
+    Income:
+      total: 201
+      transactionList: [Bill Payment ANNIE MILSOM ;]
 transactionNameMap: {}

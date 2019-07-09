@@ -16,31 +16,37 @@ class DataDisplay(QWidget):
         self.state.addSubscriber(Events.remove_category, self.removeCategory)
         self.state.addSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
         self.state.addSubscriber(Events.update_category_title, self.updateConfigCategoryName)
+        self.state.addSubscriber(Events.add_category, self.addCategory)
 
     def onDestroy(self):
         self.state.removeSubscriber(Events.transaction_drop_event, self.dropEvent)
         self.state.removeSubscriber(Events.remove_category, self.removeCategory)
         self.state.removeSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
         self.state.removeSubscriber(Events.update_category_title, self.updateConfigCategoryName)
+        self.state.removeSubscriber(Events.add_category, self.addCategory)
 
     def addCategory(self, data):
         cfg = self.state.getConfig()
-        amt = int(data['amt'])
-        cfg['months'][self.month][data['title']] = {
-            'transactionList': [],
-            'total': amt
-        }
-        self.state.setConfig(cfg)
+        if not data['title'] in cfg['months'][self.month]:
+            amt = int(data['amt'])
+            cfg['months'][self.month][data['title']] = {
+                'transactionList': [],
+                'total': amt
+            }
+            self.state.setConfig(cfg)
 
-        idx = -1
-        for i, section in enumerate(self.sectionState):
-            if int(section['total']) < amt:
-                idx = i
-                break
+            idx = -1
+            if data['title'] == 'Income':
+                idx = 0
+            else:
+                for i, section in enumerate(self.sectionState):
+                    if int(section['total']) < amt:
+                        idx = i
+                        break
 
-        self.sectionState.insert(idx, {'name': data['title'], 'total': amt})
-        self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self.state))
-        self.updateTotalAmt()
+            self.sectionState.insert(idx, {'name': data['title'], 'total': amt})
+            self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self.state))
+            self.updateTotalAmt()
 
     def loadNewMonth(self, transactionList, monthCode, disableCredit=False):
         self.allTransactions = transactionList
@@ -88,21 +94,31 @@ class DataDisplay(QWidget):
         categoryKeys.sort(key=lambda x: formattedSections[x]['total'], reverse=True)
         sectionsUI = []
         self.sectionState = []
+        incomeCategory = None
         for category in categoryKeys:
-            if category == 'income':
-              pass
+            if category == 'income' and formattedSections['income']['total'] > 0:
+                self.sectionState.append({'name': 'Income', 'total': 1})
+                incomeCategory = {
+                    'title': 'Income',
+                    'amt': 1
+                }
             elif category == 'uncategorized':
                 self.sectionState.append({'name': 'Uncategorized', 'total': '0'})
                 sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList'], self.state))
             else:
-                self.sectionState.append({'name': category, 'total': config['months'][monthCode][category]['total']})
-                sectionsUI.append(Category(category, config['months'][monthCode][category]['total'], formattedSections[category]['tList'], self.state))
+                catTotal = config['months'][monthCode][category]['total']
+                self.sectionState.append({'name': category, 'total': catTotal})
+                sectionsUI.append(Category(category, catTotal, formattedSections[category]['tList'], self.state))
 
         self.contentWrapperLayout = QVBoxLayout()
         for sectionLayout in sectionsUI:
             self.contentWrapperLayout.addWidget(sectionLayout)
         self.setLayout(self.contentWrapperLayout)
         self.state.setConfig(config)
+        if incomeCategory:
+            self.addCategory(incomeCategory)
+            incomeCategoryWidget = self.getCategoryWidget('Income')
+            incomeCategoryWidget.addTransactions(formattedSections['income']['tList'])
 
     def updateConfigCategoryTotal(self, name, amt):
         cfg = self.state.getConfig()
@@ -197,7 +213,8 @@ class DataDisplay(QWidget):
         sum = 0
         categories = list(cfg['months'][self.month].keys())
         for category in categories:
-            sum += cfg['months'][self.month][category]['total']
+            categoryTotal = cfg['months'][self.month][category]['total']
+            sum += categoryTotal if category != 'Income' else -categoryTotal
         return sum
 
     def updateTotalAmt(self):

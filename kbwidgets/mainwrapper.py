@@ -170,7 +170,7 @@ class MainWrapper(QWidget):
         modal = CategoryModal()
         data = modal.getData()
         if data:
-            self.dataDisplay.addCategory(data)
+            self.state.next(Events.add_category, data)
 
     def closeApp(self):
         sys.exit()

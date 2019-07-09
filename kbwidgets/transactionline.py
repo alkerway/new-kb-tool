@@ -28,15 +28,17 @@ class TransactionLine(QWidget):
         transactionLine.setMargin(0)
 
         self.setLayout(transactionLine)
-        self.setCursor(QtCore.Qt.OpenHandCursor)
+        if not self.transaction.isCredit:
+            self.setCursor(QtCore.Qt.OpenHandCursor)
 
     def updateName(self, newName):
         self.transaction.displayName = newName
         self.tTitle.setText(newName)
 
     def mouseMoveEvent(self, event):
-        mimeData = QtCore.QMimeData()
-        mimeData.setText(self.transaction.name)
-        drag = QtGui.QDrag(self)
-        drag.setMimeData(mimeData)
-        drag.exec_(QtCore.Qt.MoveAction)
+        if not self.transaction.isCredit:
+            mimeData = QtCore.QMimeData()
+            mimeData.setText(self.transaction.name)
+            drag = QtGui.QDrag(self)
+            drag.setMimeData(mimeData)
+            drag.exec_(QtCore.Qt.MoveAction)

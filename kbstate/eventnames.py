@@ -5,3 +5,4 @@ class Events:
     update_category_total = 'update_category_total'
     update_category_title = 'update_category_title'
     update_total = 'update_total'
+    add_category = 'add_category'
