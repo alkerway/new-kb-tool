@@ -29,6 +29,9 @@ class State:
     def addSubscriber(self, eventName, subscriberFn):
         self.events[eventName].addSubscriber(subscriberFn)
 
+    def removeSubscriber(self, eventName, subscriberFn):
+        self.events[eventName].removeSubscriber(subscriberFn)
+
     def next(self, eventName, *args):
         if eventName in self.events:
             self.events[eventName].fire(*args)

@@ -17,6 +17,12 @@ class DataDisplay(QWidget):
         self.state.addSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
         self.state.addSubscriber(Events.update_category_title, self.updateConfigCategoryName)
 
+    def onDestroy(self):
+        self.state.removeSubscriber(Events.transaction_drop_event, self.dropEvent)
+        self.state.removeSubscriber(Events.remove_category, self.removeCategory)
+        self.state.removeSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
+        self.state.removeSubscriber(Events.update_category_title, self.updateConfigCategoryName)
+
     def addCategory(self, data):
         cfg = self.state.getConfig()
         amt = int(data['amt'])
@@ -104,10 +110,6 @@ class DataDisplay(QWidget):
 
     def updateConfigCategoryName(self, name, newTitle):
         cfg = self.state.getConfig()
-        print(cfg)
-        print(self.month)
-        print()
-        print(cfg['months'][self.month])
         cfg['months'][self.month][newTitle] = cfg['months'][self.month].pop(name)
         self.state.setConfig(cfg)
 
