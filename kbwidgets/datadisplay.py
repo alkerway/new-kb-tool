@@ -97,10 +97,10 @@ class DataDisplay(QWidget):
         incomeCategory = None
         for category in categoryKeys:
             if category == 'income' and formattedSections['income']['total'] > 0:
-                self.sectionState.append({'name': 'Income', 'total': 1})
+                self.sectionState.append({'name': 'Income', 'total': formattedSections['income']['total']})
                 incomeCategory = {
                     'title': 'Income',
-                    'amt': 1
+                    'amt': formattedSections['income']['total']
                 }
             elif category == 'uncategorized':
                 self.sectionState.append({'name': 'Uncategorized', 'total': '0'})

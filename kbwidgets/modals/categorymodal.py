@@ -55,7 +55,7 @@ class CategoryModal(QDialog):
             return 0
 
     def okClicked(self):
-        if not self.inputEdit.text():
+        if not self.inputEdit.text() or self.inputEdit.text() in ['Income', 'Uncategorized']:
             self.inputEdit.setStyleSheet("border: 2px solid red;")
             self.inputEdit.setFocus()
         elif not self.amtEdit.text():

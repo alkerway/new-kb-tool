@@ -14,8 +14,14 @@ months:
     Phone:
       total: 20
       transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;]
-  2019-04: {}
+  2019-04:
+    Income:
+      total: 18528
+      transactionList: []
   2019-05:
+    Income:
+      total: 329
+      transactionList: []
     Tuition:
       total: 18252
       transactionList: [PAY UNIVERSITY OF AUCKLAND - STUDENT PAYMENTS ;084743DpsA2A
@@ -82,11 +88,14 @@ months:
       transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,
         'TRANSACTION PRINTOUT FEE #38 9019 0725301 00 ;']
   2019-07:
-    Fuel:
-      total: 96
-      transactionList: [Z MATAMATA Z MATAMATA ;, GULL KINGSLAND SPEEDLANE GULL KINGSLAN
-          ;]
     Income:
       total: 201
-      transactionList: [Bill Payment ANNIE MILSOM ;]
+      transactionList: []
+    Out:
+      total: 100
+      transactionList: [PAY Annie ;]
+    Trips:
+      total: 117
+      transactionList: [Z MATAMATA Z MATAMATA ;, GULL KINGSLAND SPEEDLANE GULL KINGSLAN
+          ;, COUNTDOWN TAURANGA TAURANGA ;, 'POS W/D The Warehouse-12:56 ;']
 transactionNameMap: {}
