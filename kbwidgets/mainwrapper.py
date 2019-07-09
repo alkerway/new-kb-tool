@@ -8,7 +8,7 @@ from kbparsers import CSVParser
 from kbutils import clearLayout
 from kbwidgets.modals import CategoryModal
 from .datadisplay import DataDisplay
-from kbstate import State
+from kbstate import State, Events
 
 boldFont = QFont()
 boldFont.setBold(True)
@@ -19,6 +19,7 @@ class MainWrapper(QWidget):
         super(MainWrapper, self).__init__()
         self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         self.state = State()
+        self.addListeners()
         self.buildUI()
 
     def showFileSelect(self):
@@ -34,16 +35,17 @@ class MainWrapper(QWidget):
             if len(allMonths) > 1:
                 self.monthDecreaseButton.show()
 
+    def addListeners(self):
+        self.state.addSubscriber(Events.update_total, self.setTotalDisplay)
+
     def loadMonth(self, monthText):
         monthNumber = int(monthText.split('-')[1])
         self.monthTitle.setText(self.monthNames[monthNumber - 1] + ' ' + monthText.split('-')[0])
         self.currentMonth = monthText
         clearLayout(self.dataDisplayWrapper)
         self.dataDisplay = DataDisplay(self.state, self.transactionMap[self.currentMonth], self.currentMonth)
-        self.totalDisplay.setText(self.dataDisplay.getTotalAmt(self.transactionMap[self.currentMonth]))
+
         self.dataDisplayWrapper.addWidget(self.dataDisplay)
-        testWidget = QLabel()
-        testWidget.setText('lmao')
 
     def loadPreviousMonth(self):
         currentIndex = self.monthsList.index(self.currentMonth)
@@ -64,6 +66,13 @@ class MainWrapper(QWidget):
             if currentIndex == len(self.monthsList) - 2:
                 self.monthIncreaseButton.hide()
 
+    def setTotalDisplay(self, transactionTotal, categoryTotal):
+        self.totalDisplay.setText('Total: $' + str(transactionTotal) + ' / ' + str(categoryTotal))
+        print(transactionTotal)
+        if transactionTotal <= categoryTotal:
+            self.totalDisplay.setStyleSheet("QLabel { color : darkGreen; }")
+        else:
+            self.totalDisplay.setStyleSheet("QLabel { color : darkRed; }")
 
     def buildUI(self):
         self.closeButton = QPushButton('close')

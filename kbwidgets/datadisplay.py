@@ -40,12 +40,13 @@ class DataDisplay(QWidget):
 
         self.sectionState.insert(idx, {'name': data['title'], 'total': amt})
         self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self.state))
-        # self.updateTotalAmt()
+        self.updateTotalAmt()
 
     def loadNewMonth(self, transactionList, monthCode, disableCredit=False):
         self.allTransactions = transactionList
         self.month = monthCode
         self.constructCategories(transactionList, monthCode)
+        self.updateTotalAmt()
 
     def constructCategories(self, transactionList, monthCode):
         config = self.state.getConfig()
@@ -107,6 +108,7 @@ class DataDisplay(QWidget):
         cfg = self.state.getConfig()
         cfg['months'][self.month][name]['total'] = amt
         self.state.setConfig(cfg)
+        self.updateTotalAmt()
 
     def updateConfigCategoryName(self, name, newTitle):
         cfg = self.state.getConfig()
@@ -181,11 +183,24 @@ class DataDisplay(QWidget):
             else:
                 i += 1
             curWidget = self.contentWrapperLayout.itemAt(i)
-        # self.updateTotalAmt()
+        self.updateTotalAmt()
 
 
-    def getTotalAmt(self, transactionList):
+    def getTotalAmt(self):
         totalAmt = 0
-        for transaction in transactionList:
+        for transaction in self.allTransactions:
             totalAmt += (-1 * transaction.amt) if transaction.isCredit else transaction.amt
-        return str(round(totalAmt, 2))
+        return round(totalAmt, 2)
+
+    def sumCategories(self):
+        cfg = self.state.getConfig()
+        sum = 0
+        categories = list(cfg['months'][self.month].keys())
+        for category in categories:
+            sum += cfg['months'][self.month][category]['total']
+        return sum
+
+    def updateTotalAmt(self):
+        categorySum = self.sumCategories()
+        transactionSum = self.getTotalAmt()
+        self.state.next(Events.update_total, transactionSum, categorySum)

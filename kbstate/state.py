@@ -11,7 +11,8 @@ class State:
             'transaction_drop_event',
             'remove_category',
             'update_category_total',
-            'update_category_title'
+            'update_category_title',
+            'update_total'
         ]
         for event in eventslist:
             self.addEvent(event)

@@ -44,19 +44,23 @@ months:
       transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;, PAY Samuel Fonacier ;,
         UNIVERSITY BOOK SHOP AUCKLAND ;]
   2019-06:
-    frivolity:
+    Frivolity:
       total: 150
       transactionList: [BARILLA DUMPLING AUCKLAND ;, THE WHITE LADY AUCKLAND ;, THE
           SHELF AUCKLAND ;, SOUTHERN MAID DONUTS AUCKLAND ;, PAY Monica ;, MUNCHY
           MART LIMITED AUCKLAND ;, BURGER FUEL PARNELL AUCKLAND ;, FUTURE CLUB AUCKLAND
           ;, 'ATM W/D Victoria St W-01:19 ;']
     groceries:
-      total: 340
+      total: 250
       transactionList: [COUNTDOWN AKL METRO AUCKLAND ;]
     rent:
-      total: 880
+      total: 875
       transactionList: [UOA ACCOMMODATION AUCKLAND ;]
-    sth island:
+    transport:
+      total: 30
+      transactionList: [LIM 8885463345 CA ;, OLACABS RIDE PAYMENT AUCKLAND ;, AT HOP
+          AUCKLAND HENDERSON ;]
+    trips:
       total: 585
       transactionList: [NPD GREEN ISLAND NPD GREEN ISLAND ;, FOUR SQUARE MACKENZIE
           TWIZEL ;, TWL 220 RICCARTON RICCARTON ;, FOUR SQUARE TE ANAU TE ANAU ;,
@@ -66,14 +70,10 @@ months:
         KIWI FUELS LTD KIWI FUELS LTD ;, TWL 141 HAMILTON HAMILTON ;, NEW WORLD FOXTON
           FOXTON ;, 'POS W/D MASTER CHEF K-16:44 ;', CASH WITHDRAWAL ;, JUCY RENTALS
           NZ LIMITEDAUK ;]
-    transport:
-      total: 30
-      transactionList: [LIM 8885463345 CA ;, OLACABS RIDE PAYMENT AUCKLAND ;, AT HOP
-          AUCKLAND HENDERSON ;]
     upkeep:
       total: 70
-      transactionList: ['POS W/D BARKERS GROOM-13:21 ;', VODAFONE PREPAY VISA MCAUCKLAND
-          ;]
+      transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;, 'POS W/D BARKERS GROOM-13:21
+          ;']
     visa renewal:
       total: 35
       transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,
