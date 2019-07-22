@@ -10,6 +10,7 @@ class DataDisplay(QWidget):
         self.state = state
         self.addListeners()
         self.loadNewMonth(transactionList, monthCode)
+        self.setMaximumHeight(800)
 
     def addListeners(self):
         self.state.addSubscriber(Events.transaction_drop_event, self.dropEvent)
@@ -41,7 +42,7 @@ class DataDisplay(QWidget):
             else:
                 for i, section in enumerate(self.sectionState):
                     if int(section['total']) < amt:
-                        idx = i
+                        idx = i - 1
                         break
 
             self.sectionState.insert(idx, {'name': data['title'], 'total': amt})

@@ -38,8 +38,7 @@ class CSVParser():
                 date = values[self.dateIdx]
                 amountCredit = values[self.amountCreditIdx]
                 newTransaction = Transaction(displayName, amountDebit, amountCredit, date, description)
-                if not newTransaction.isCredit or 'DOROSTK' not in newTransaction.name and 'LIVING EXPENSES' not in newTransaction.name:
-                    transactions.append(newTransaction)
+                transactions.append(newTransaction)
 
         return transactions
 
@@ -48,7 +47,6 @@ class CSVParser():
         with open(csvFileName, 'r') as contents:
             lines = contents.read().splitlines()
             titles = lines[0].split(',')
-            print(titles)
             self.amountDebitIdx = titles.index('Amount (debit)')
             self.amountCreditIdx = titles.index('Amount (credit)')
             self.dateIdx = titles.index('Date')

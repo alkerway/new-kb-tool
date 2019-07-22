@@ -68,7 +68,6 @@ class MainWrapper(QWidget):
 
     def setTotalDisplay(self, transactionTotal, categoryTotal):
         self.totalDisplay.setText('Total: $' + str(transactionTotal) + ' / ' + str(categoryTotal))
-        print(transactionTotal)
         if transactionTotal <= categoryTotal:
             self.totalDisplay.setStyleSheet("QLabel { color : darkGreen; }")
         else:
@@ -85,6 +84,7 @@ class MainWrapper(QWidget):
         self.buildHeaderWidget()
 
         self.dataDisplayWrapper = QHBoxLayout()
+
 
         self.mainWrapperLayout = QVBoxLayout()
         self.mainWrapperLayout.addLayout(self.titleLayout)

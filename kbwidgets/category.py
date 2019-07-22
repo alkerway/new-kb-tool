@@ -15,7 +15,7 @@ class Category(QWidget):
         self.state = state
         self.transactions = []
         self.categoryTotal = categoryTotal
-        self.collapsed = False
+        self.collapsed = True
 
         self.sectionLayout = QVBoxLayout()
         self.gridContainer = QWidget()
@@ -35,7 +35,7 @@ class Category(QWidget):
         self.headerText.mousePressEvent = self.toggleCollapsed
 
         self.collapseButton = QLabel()
-        self.collapseButton.setText('⊟')
+        self.collapseButton.setText('⊞' if self.collapsed else '⊟')
         self.collapseButton.setMaximumWidth(12)
         self.collapseButton.setCursor(Qt.PointingHandCursor)
         self.collapseButton.setToolTip('collapse')
