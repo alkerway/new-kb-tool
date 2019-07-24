@@ -1,6 +1,6 @@
 import sys
 
-from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog, QSizePolicy
+from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog, QScrollArea, QFrame, QSizePolicy
 from PySide2.QtGui import QFont
 from PySide2 import QtCore
 
@@ -21,6 +21,7 @@ class MainWrapper(QWidget):
         self.state = State()
         self.addListeners()
         self.buildUI()
+        self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
     def showFileSelect(self):
         fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
@@ -44,6 +45,7 @@ class MainWrapper(QWidget):
         self.currentMonth = monthText
         clearLayout(self.dataDisplayWrapper)
         self.dataDisplay = DataDisplay(self.state, self.transactionMap[self.currentMonth], self.currentMonth)
+        self.dataDisplay.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
 
         self.dataDisplayWrapper.addWidget(self.dataDisplay)
 

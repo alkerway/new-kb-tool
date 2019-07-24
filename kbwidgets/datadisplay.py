@@ -10,7 +10,6 @@ class DataDisplay(QWidget):
         self.state = state
         self.addListeners()
         self.loadNewMonth(transactionList, monthCode)
-        # self.setMaximumHeight(800)
 
     def addListeners(self):
         self.state.addSubscriber(Events.transaction_drop_event, self.dropEvent)
@@ -206,7 +205,8 @@ class DataDisplay(QWidget):
     def getTotalAmt(self):
         totalAmt = 0
         for transaction in self.allTransactions:
-            totalAmt += (-1 * transaction.amt) if transaction.isCredit else transaction.amt
+            # totalAmt += (-1 * transaction.amt) if transaction.isCredit else transaction.amt
+            totalAmt += 0 if transaction.isCredit else transaction.amt
         return round(totalAmt, 2)
 
     def sumCategories(self):
@@ -215,7 +215,8 @@ class DataDisplay(QWidget):
         categories = list(cfg['months'][self.month].keys())
         for category in categories:
             categoryTotal = cfg['months'][self.month][category]['total']
-            sum += categoryTotal if category != 'Income' else -categoryTotal
+            # sum += categoryTotal if category != 'Income' else -categoryTotal
+            sum += categoryTotal if category != 'Income' else 0
         return sum
 
     def updateTotalAmt(self):
