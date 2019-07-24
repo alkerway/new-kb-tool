@@ -1,6 +1,6 @@
 import sys
 
-from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog
+from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog, QSizePolicy
 from PySide2.QtGui import QFont
 from PySide2 import QtCore
 
@@ -83,14 +83,20 @@ class MainWrapper(QWidget):
         self.buildMonthDisplayLayout()
         self.buildHeaderWidget()
 
+        self.headerLayout = QVBoxLayout()
+        self.headerLayout.addLayout(self.titleLayout)
+        self.headerLayout.addLayout(self.monthDisplayLayout)
+        self.headerLayout.addWidget(self.categoryHeaderWidget)
+        self.headerLayout.addWidget(self.closeButton)
+
+        self.headerLayoutWrapperWidget = QWidget()
+        self.headerLayoutWrapperWidget.setLayout(self.headerLayout)
+        self.headerLayoutWrapperWidget.setMaximumHeight(100)
+
         self.dataDisplayWrapper = QHBoxLayout()
 
-
         self.mainWrapperLayout = QVBoxLayout()
-        self.mainWrapperLayout.addLayout(self.titleLayout)
-        self.mainWrapperLayout.addLayout(self.monthDisplayLayout)
-        self.mainWrapperLayout.addWidget(self.headerWidget)
-        self.mainWrapperLayout.addWidget(self.closeButton)
+        self.mainWrapperLayout.addWidget(self.headerLayoutWrapperWidget)
         self.mainWrapperLayout.addLayout(self.dataDisplayWrapper)
 
         self.setLayout(self.mainWrapperLayout)
@@ -153,18 +159,18 @@ class MainWrapper(QWidget):
         self.totalDisplay.setFont(boldFont)
 
 
-        self.headerLayout = QHBoxLayout()
-        self.headerLayout.addWidget(self.categoriesTitle)
-        self.headerLayout.addWidget(self.categoriesAddButton)
-        self.headerLayout.addWidget(self.totalDisplay)
-        self.headerLayout.setMargin(0)
+        self.categoryHeaderLayout = QHBoxLayout()
+        self.categoryHeaderLayout.addWidget(self.categoriesTitle)
+        self.categoryHeaderLayout.addWidget(self.categoriesAddButton)
+        self.categoryHeaderLayout.addWidget(self.totalDisplay)
+        self.categoryHeaderLayout.setMargin(0)
 
-        self.headerWidget = QWidget()
-        self.headerWidget.setLayout(self.headerLayout)
+        self.categoryHeaderWidget = QWidget()
+        self.categoryHeaderWidget.setLayout(self.categoryHeaderLayout)
 
-        minSize = self.headerLayout.minimumSize()
+        minSize = self.categoryHeaderLayout.minimumSize()
         minSize.setWidth(450)
-        self.headerWidget.setMaximumSize(minSize)
+        self.categoryHeaderWidget.setMaximumSize(minSize)
 
     def promptAddCategory(self):
         modal = CategoryModal()

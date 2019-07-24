@@ -95,12 +95,17 @@ months:
       transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,
         'TRANSACTION PRINTOUT FEE #38 9019 0725301 00 ;']
   2019-07:
+    Gifts:
+      total: 200
+      transactionList: ['POS W/D LIQUOR PARK L-15:26 ;', 'POS W/D WELLESLEY STR-14:54
+          ;', IMPERIAL MINI SUPERMAR AUCKLAND NZ ;, WSL VICTORIA ST AKLD AUCKLAND
+          ;]
     Groceries:
       total: 150
       transactionList: [COUNTDOWN AKL METRO AUCKLAND ;, COUNTDOWN AKL CENTRAL AUCKLAND
           ;]
     Income:
-      total: 550
+      total: 650
       transactionList: []
     Maint:
       total: 50
@@ -110,7 +115,7 @@ months:
       total: 100
       transactionList: [PAY Annie ;, OLACABS RIDE PAYMENT AUCKLAND ;, DOMINO'S PIZZA
           - AUC AUCKLAND ;, 'POS W/D THE TANDOOR T-20:53 ;', BAR101 AUCKLAND ;, 'POS
-          W/D MCDONALDS AIR-20:56 ;']
+          W/D MCDONALDS AIR-20:56 ;', PAY Annie ;curry curry curry]
     Trips:
       total: 127
       transactionList: [Z MATAMATA Z MATAMATA ;, GULL KINGSLAND SPEEDLANE GULL KINGSLAN

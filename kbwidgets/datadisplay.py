@@ -10,7 +10,7 @@ class DataDisplay(QWidget):
         self.state = state
         self.addListeners()
         self.loadNewMonth(transactionList, monthCode)
-        self.setMaximumHeight(800)
+        # self.setMaximumHeight(800)
 
     def addListeners(self):
         self.state.addSubscriber(Events.transaction_drop_event, self.dropEvent)
