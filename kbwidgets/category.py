@@ -10,12 +10,15 @@ from kbstate import Events
 
 class Category(QWidget):
     def __init__(self, name, categoryTotal, transactions, state):
+        ##
+        initialCollapsed = False
+        ##
         QWidget.__init__(self)
         self.name = name
         self.state = state
         self.transactions = []
         self.categoryTotal = categoryTotal
-        self.collapsed = True
+        self.collapsed = initialCollapsed
 
         self.sectionLayout = QVBoxLayout()
         self.gridContainer = QWidget()
