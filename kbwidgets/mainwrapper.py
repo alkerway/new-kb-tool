@@ -31,8 +31,7 @@ class MainWrapper(QWidget):
             allMonths = list(self.transactionMap.keys())
             allMonths.sort()
             self.monthsList = allMonths
-            self.currentMonth = allMonths[-1]
-            self.loadMonth(self.currentMonth)
+            self.loadMonth(allMonths[-1])
             if len(allMonths) > 1:
                 self.monthDecreaseButton.show()
 
@@ -42,9 +41,13 @@ class MainWrapper(QWidget):
     def loadMonth(self, monthText):
         monthNumber = int(monthText.split('-')[1])
         self.monthTitle.setText(self.monthNames[monthNumber - 1] + ' ' + monthText.split('-')[0])
+        prevCode = None if self.currentMonth == 'Month' else self.currentMonth
         self.currentMonth = monthText
         clearLayout(self.dataDisplayWrapper)
-        self.dataDisplay = DataDisplay(self.state, self.transactionMap[self.currentMonth], self.currentMonth)
+        self.dataDisplay = DataDisplay(self.state,
+                                       self.transactionMap[self.currentMonth],
+                                       self.currentMonth,
+                                       prevCode=prevCode)
         self.dataDisplay.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Maximum)
 
         self.dataDisplayWrapper.addWidget(self.dataDisplay)

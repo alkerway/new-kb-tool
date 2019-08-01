@@ -1,15 +1,15 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout
-
+from copy import deepcopy
 from kbstate import Events
 from .category import Category
 
 class DataDisplay(QWidget):
-    def __init__(self, state, transactionList, monthCode):
+    def __init__(self, state, transactionList, monthCode, prevCode = None):
         QWidget.__init__(self)
         self.allTransactions = []
         self.state = state
         self.addListeners()
-        self.loadNewMonth(transactionList, monthCode)
+        self.loadNewMonth(transactionList, monthCode, prevCode)
 
     def addListeners(self):
         self.state.addSubscriber(Events.transaction_drop_event, self.dropEvent)
@@ -27,6 +27,7 @@ class DataDisplay(QWidget):
 
     def addCategory(self, data):
         cfg = self.state.getConfig()
+        print(data['title'], cfg['months'][self.month])
         if not data['title'] in cfg['months'][self.month]:
             amt = int(data['amt'])
             cfg['months'][self.month][data['title']] = {
@@ -41,23 +42,26 @@ class DataDisplay(QWidget):
             else:
                 for i, section in enumerate(self.sectionState):
                     if int(section['total']) < amt:
-                        idx = i - 1
+                        print(section, amt, i)
+                        idx = i
                         break
 
             self.sectionState.insert(idx, {'name': data['title'], 'total': amt})
             self.contentWrapperLayout.insertWidget(idx, Category(data['title'], amt, [], self.state))
             self.updateTotalAmt()
 
-    def loadNewMonth(self, transactionList, monthCode, disableCredit=False):
+    def loadNewMonth(self, transactionList, monthCode, prevCode = None, disableCredit=False):
         self.allTransactions = transactionList
         self.month = monthCode
-        self.constructCategories(transactionList, monthCode)
+        self.constructCategories(transactionList, monthCode, prevCode)
         self.updateTotalAmt()
 
-    def constructCategories(self, transactionList, monthCode):
+    def constructCategories(self, transactionList, monthCode, prevCode):
         config = self.state.getConfig()
         if not monthCode in config['months']:
-            config['months'][monthCode] = {}
+            prevCode = prevCode if prevCode else max(list(config['months'].keys()))
+            # config option?
+            config['months'][monthCode] = deepcopy(config['months'][prevCode])
 
         formattedSections = {
             'uncategorized': {
@@ -96,12 +100,13 @@ class DataDisplay(QWidget):
         self.sectionState = []
         incomeCategory = None
         for category in categoryKeys:
-            if category == 'income' and formattedSections['income']['total'] > 0:
-                self.sectionState.append({'name': 'Income', 'total': formattedSections['income']['total']})
-                incomeCategory = {
-                    'title': 'Income',
-                    'amt': formattedSections['income']['total']
-                }
+            if category == 'income':
+                if formattedSections['income']['total'] > 0:
+                    self.sectionState.append({'name': 'Income', 'total': formattedSections['income']['total']})
+                    incomeCategory = {
+                        'title': 'Income',
+                        'amt': formattedSections['income']['total']
+                    }
             elif category == 'uncategorized':
                 self.sectionState.append({'name': 'Uncategorized', 'total': '0'})
                 sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList'], self.state))
