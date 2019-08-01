@@ -6,16 +6,8 @@ class State:
     def __init__(self):
         self.config = ConfigUtil()
         self.events = {}
-        eventslist = [
-            'set_config',
-            'transaction_drop_event',
-            'remove_category',
-            'update_category_total',
-            'update_category_title',
-            'update_total',
-            'add_category'
-        ]
-        for event in eventslist:
+        evts = list(filter(lambda e: '__' not in e, list(Events.__dict__.keys())))
+        for event in evts:
             self.addEvent(event)
 
     def addEvent(self, eventName):
