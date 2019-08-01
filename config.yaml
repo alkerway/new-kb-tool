@@ -97,9 +97,8 @@ months:
   2019-07:
     Gifts:
       total: 200
-      transactionList: ['POS W/D LIQUOR PARK L-15:26 ;', 'POS W/D WELLESLEY STR-14:54
-          ;', IMPERIAL MINI SUPERMAR AUCKLAND NZ ;, WSL VICTORIA ST AKLD AUCKLAND
-          ;]
+      transactionList: ['POS W/D WELLESLEY STR-14:54 ;', IMPERIAL MINI SUPERMAR AUCKLAND
+          NZ ;, WSL VICTORIA ST AKLD AUCKLAND ;, 'POS W/D LIQUOR PARK L-15:26 ;']
     Groceries:
       total: 100
       transactionList: [COUNTDOWN AKL METRO AUCKLAND ;, COUNTDOWN AKL CENTRAL AUCKLAND

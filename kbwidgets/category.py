@@ -151,7 +151,7 @@ class Category(QWidget):
                 self.collapseButton.setToolTip('collapse')
 
     def dragEnterEvent(self, event):
-        if event.mimeData().hasText():
+        if event.mimeData().hasText() and self.name != 'Income':
             event.setDropAction(Qt.CopyAction)
             event.accept()
         else:
