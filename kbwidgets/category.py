@@ -162,6 +162,9 @@ class Category(QWidget):
             transactionTitle = event.mimeData().text()
             self.state.next(Events.transaction_drop_event, transactionTitle, self.name)
 
+    def getTransactions(self):
+        return self.transactions
+
     def removeCategory(self):
         self.state.next(Events.remove_category, self.name, self.transactions)
 

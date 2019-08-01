@@ -17,6 +17,7 @@ class DataDisplay(QWidget):
         self.state.addSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
         self.state.addSubscriber(Events.update_category_title, self.updateConfigCategoryName)
         self.state.addSubscriber(Events.add_category, self.addCategory)
+        self.state.addSubscriber(Events.remove_all_categories, self.removeAllCategories)
 
     def onDestroy(self):
         self.state.removeSubscriber(Events.transaction_drop_event, self.dropEvent)
@@ -24,6 +25,7 @@ class DataDisplay(QWidget):
         self.state.removeSubscriber(Events.update_category_total, self.updateConfigCategoryTotal)
         self.state.removeSubscriber(Events.update_category_title, self.updateConfigCategoryName)
         self.state.removeSubscriber(Events.add_category, self.addCategory)
+        self.state.removeSubscriber(Events.remove_all_categories, self.removeAllCategories)
 
     def addCategory(self, data):
         cfg = self.state.getConfig()
@@ -205,6 +207,13 @@ class DataDisplay(QWidget):
                 i += 1
             curWidget = self.contentWrapperLayout.itemAt(i)
         self.updateTotalAmt()
+
+    def removeAllCategories(self):
+        cfg = self.state.getConfig()
+        allCategories = cfg['months'][self.month].keys()
+        for category in allCategories:
+            categoryTransactions = self.getCategoryWidget(category).getTransactions()
+            self.removeCategory(category, categoryTransactions)
 
 
     def getTotalAmt(self):

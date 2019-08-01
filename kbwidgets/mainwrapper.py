@@ -1,8 +1,8 @@
 import sys
 
-from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog, QScrollArea, QFrame, QSizePolicy
-from PySide2.QtGui import QFont
-from PySide2 import QtCore
+from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog, QMenu, QAction, QSizePolicy
+from PySide2.QtGui import QFont, QCursor
+from PySide2.QtCore import Qt, SIGNAL
 
 from kbparsers import CSVParser
 from kbutils import clearLayout
@@ -127,7 +127,7 @@ class MainWrapper(QWidget):
         self.currentMonth = 'Month'
         self.monthTitle.setText(self.currentMonth)
         self.monthTitle.setMaximumWidth(115)
-        self.monthTitle.setAlignment(QtCore.Qt.AlignCenter)
+        self.monthTitle.setAlignment(Qt.AlignCenter)
 
         self.monthIncreaseButton = QPushButton('>')
         self.monthIncreaseButton.clicked.connect(self.loadNextMonth)
@@ -156,11 +156,13 @@ class MainWrapper(QWidget):
         self.categoriesAddButton.setMaximumWidth(20)
         self.categoriesAddButton.clicked.connect(self.promptAddCategory)
         self.categoriesAddButton.setToolTip('Add Category')
+        self.categoriesAddButton.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.connect(self.categoriesAddButton, SIGNAL('customContextMenuRequested(const QPoint &)'), self.categoriesAddContextMenu)
 
         self.sumTransactions = 0
         self.totalDisplay = QLabel(self)
         self.totalDisplay.setText('Total: - / -')
-        self.totalDisplay.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        self.totalDisplay.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self.totalDisplay.setFont(boldFont)
 
 
@@ -182,6 +184,16 @@ class MainWrapper(QWidget):
         data = modal.getData()
         if data:
             self.state.next(Events.add_category, data)
+
+    def categoriesAddContextMenu(self):
+        menu = QMenu(self)
+        removeAction = QAction('Remove All')
+        removeAction.triggered.connect(self.removeAllCategories)
+        menu.addAction(removeAction)
+        menu.exec_(QCursor.pos())
+
+    def removeAllCategories(self):
+        self.state.next(Events.remove_all_categories)
 
     def closeApp(self):
         sys.exit()
