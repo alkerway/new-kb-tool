@@ -23,17 +23,35 @@ class MainWrapper(QWidget):
         self.buildUI()
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
-    def showFileSelect(self):
-        fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
-        if success:
+    def loadNewFile(self):
+        fileName = self.getCsvFileName()
+        if fileName:
             parser = CSVParser()
-            self.transactionMap = parser.parseCsv(fname)
+            self.transactionMap = parser.parseCsv(fileName)
             allMonths = list(self.transactionMap.keys())
             allMonths.sort()
             self.monthsList = allMonths
             self.loadMonth(allMonths[-1])
             if len(allMonths) > 1:
                 self.monthDecreaseButton.show()
+
+    def getCsvFileName(self):
+        fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
+        if success:
+            return fname
+
+    def addFile(self):
+        fileName = self.getCsvFileName()
+        if fileName:
+            parser = CSVParser()
+            newTransactionMap = parser.parseCsv(fileName)
+            self.transactionMap = parser.addTransactionMap(self.transactionMap, newTransactionMap)
+            allMonths = list(self.transactionMap.keys())
+            allMonths.sort()
+            self.monthsList = allMonths
+            self.loadMonth(self.currentMonth)
+
+
 
     def addListeners(self):
         self.state.addSubscriber(Events.update_total, self.setTotalDisplay)
@@ -114,8 +132,11 @@ class MainWrapper(QWidget):
         self.appTitle.setFont(boldFont)
 
         self.chooseFileButton = QPushButton("choose file")
-        self.chooseFileButton.clicked.connect(self.showFileSelect)
+        self.chooseFileButton.clicked.connect(self.loadNewFile)
         self.chooseFileButton.setShortcut('Ctrl+O')
+        self.chooseFileButton.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.connect(self.chooseFileButton, SIGNAL('customContextMenuRequested(const QPoint &)'),
+                     self.chooseFileContextMenu)
         self.chooseFileButton.setMaximumWidth(90)
 
         self.titleLayout = QHBoxLayout()
@@ -194,6 +215,14 @@ class MainWrapper(QWidget):
 
     def removeAllCategories(self):
         self.state.next(Events.remove_all_categories)
+
+    def chooseFileContextMenu(self):
+        if hasattr(self, 'dataDisplay'):
+            menu = QMenu(self)
+            addStatementAction = QAction('Add Statement')
+            addStatementAction.triggered.connect(self.addFile)
+            menu.addAction(addStatementAction)
+            menu.exec_(QCursor.pos())
 
     def closeApp(self):
         sys.exit()

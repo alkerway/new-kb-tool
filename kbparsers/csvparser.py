@@ -55,3 +55,12 @@ class CSVParser():
             sortedTransactionsMap = self.separateByMonth(allTransactions)
             return sortedTransactionsMap
 
+    def addTransactionMap(self, oldTransactionMap, newTransactionMap):
+        for month in newTransactionMap.keys():
+            if month in oldTransactionMap:
+                oldTransactionMap[month] += newTransactionMap[month]
+                oldTransactionMap[month].sort(key=lambda t: t.date)
+            else:
+                oldTransactionMap[month] = newTransactionMap[month]
+        return oldTransactionMap
+

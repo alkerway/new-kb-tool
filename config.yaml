@@ -61,7 +61,8 @@ months:
           LIMI-12:25 ;', HA POKE AUCKLAND ;, 'POS W/D FAT CAMEL HOS-20:39 ;', 'POS
           W/D FAT CAMEL HOS-21:03 ;', 'POS W/D FAT CAMEL HOS-20:34 ;', 'POS W/D FAT
           CAMEL HOS-20:57 ;', 'POS W/D SHADOWS BAR S-21:45 ;', JAPAN MART CITY CENTRALAUCKLAND
-          ;, FUREIN ASIAN AUCKLAND ;]
+          ;, FUREIN ASIAN AUCKLAND ;, 'POS W/D FAT CAMEL HOS-23:26 ;', 'POS W/D SHADOWS
+          BAR S-21:43 ;', 'POS W/D CHEERS LIQUOR-18:13 ;']
     Income:
       total: 442
       transactionList: []
@@ -69,9 +70,10 @@ months:
       total: 340
       transactionList: [COUNTDOWN AKL METRO AUCKLAND ;, COUNTDOWN AKL CENTRAL AUCKLAND
           ;]
-    rent:
-      total: 1800
-      transactionList: [UOA ACCOMMODATION AUCKLAND ;]
+    rent/tuition:
+      total: 20050
+      transactionList: [UOA ACCOMMODATION AUCKLAND ;, PAY UNIVERSITY OF AUCKLAND -
+          STUDENT PAYMENTS ;084743DpsA2A UoA A2A 270461]
     trips:
       total: 585
       transactionList: [NPD GREEN ISLAND NPD GREEN ISLAND ;, FOUR SQUARE MACKENZIE
@@ -86,10 +88,6 @@ months:
       total: 70
       transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;, 'POS W/D BARKERS GROOM-13:21
           ;', UNIVERSITY BOOK SHOP AUCKLAND ;, PAY Samuel Fonacier ;]
-    visa renewal:
-      total: 35
-      transactionList: [CAMPUS PHARMACY AUCKLAND ;, CAMPUS CARD OFFICE AUCKLAND ;,
-        'TRANSACTION PRINTOUT FEE #38 9019 0725301 00 ;']
   2019-06:
     Groceries:
       total: 400
@@ -102,7 +100,10 @@ months:
       total: 105
       transactionList: [PERSIA BARBER AUCKLAND ;, VODAFONE PREPAY VISA MCAUCKLAND
           ;, 'POS W/D BARKERS GROOM-13:21 ;', CAMPUS PHARMACY AUCKLAND ;, 'TRANSACTION
-          PRINTOUT FEE #38 9019 0725301 00 ;', CAMPUS CARD OFFICE AUCKLAND ;]
+          PRINTOUT FEE #38 9019 0725301 00 ;', CAMPUS CARD OFFICE AUCKLAND ;, 'POS
+          W/D LEVI STRAUSS -12:14 ;', 'POS W/D HALLENSTEINS -11:24 ;', 'TRANSACTION
+          PRINTOUT FEE #38 9019 0725301 01 ;', 'Direct Debit -DEBITSUCCESS ;Ref: JTBA887369
+          D EBITSUCCESSP ayment']
     Out:
       total: 140
       transactionList: [PAY Annie ;, DOMINO'S PIZZA - AUC AUCKLAND ;, 'POS W/D THE
@@ -110,16 +111,21 @@ months:
         PAY Annie ;curry curry curry, PAY Monica ;, SOUTHERN MAID DONUTS AUCKLAND
           ;, THE SHELF AUCKLAND ;, THE WHITE LADY AUCKLAND ;, MUNCHY MART LIMITED
           AUCKLAND ;, BARILLA DUMPLING AUCKLAND ;, BURGER FUEL PARNELL AUCKLAND ;,
-        FUTURE CLUB AUCKLAND ;, 'ATM W/D Victoria St W-01:19 ;']
+        FUTURE CLUB AUCKLAND ;, 'ATM W/D Victoria St W-01:19 ;', 'POS W/D FAT CAMEL
+          HOS-20:30 ;', 'POS W/D FAT CAMEL HOS-20:52 ;', 'POS W/D FAT CAMEL HOS-00:30
+          ;', 'POS W/D BARILLA DUMPL-13:37 ;', 'POS W/D FAT CAMEL HOS-20:59 ;', 'POS
+          W/D FAT CAMEL HOS-22:29 ;', 'POS W/D KEBABS ON QUE-12:46 ;', 'POS W/D CHEERS
+          LIQUOR-17:44 ;', 'POS W/D ELLICE ROAD E-21:45 ;']
     Rent:
       total: 880
-      transactionList: [UOA ACCOMMODATION AUCKLAND ;]
+      transactionList: [UOA ACCOMMODATION AUCKLAND ;, 'POS W/D UOA STUDENT I-16:40
+          ;']
     Transport:
-      total: 50
+      total: 60
       transactionList: [OLACABS RIDE PAYMENT AUCKLAND ;, LIM 8885463345 CA ;, AT HOP
           AUCKLAND HENDERSON ;]
     Trips:
-      total: 600
+      total: 1500
       transactionList: [FOUR SQUARE TE ANAU TE ANAU ;, 'POS W/D SOMEKIND LIMI-12:25
           ;', TWL 220 RICCARTON RICCARTON ;, NPD GREEN ISLAND NPD GREEN ISLAND ;,
         FOUR SQUARE MACKENZIE TWIZEL ;, 'POS W/D DF SOUVENIRS -15:44 ;', PIG & WHISTLE
@@ -127,13 +133,25 @@ months:
           AIRPORT QUEENSTOWN ;, SNAKE BITE BREWERY FRANZ JOSEF G ;, RELAY CHRISTCHURCH
           ;, TWL 141 HAMILTON HAMILTON ;, MOBIL BULLS BULLS ;, KIWI FUELS LTD KIWI
           FUELS LTD ;, JUCY RENTALS NZ LIMITEDAUK ;, 'POS W/D MASTER CHEF K-16:44
-          ;', NEW WORLD FOXTON FOXTON ;, CASH WITHDRAWAL ;]
+          ;', NEW WORLD FOXTON FOXTON ;, CASH WITHDRAWAL ;, PAK N SAVE FUEL INVERCARG
+          PAK N SAVE F ;, 'POS W/D COUNTDOWN ASH-17:34 ;', 'POS W/D COUNTDOWN CHC-15:06
+          ;', 'POS W/D ZAM ZAM TRADI-18:53 ;', 'POS W/D FISHTAIL REST-21:10 ;', 'POS
+          W/D NEW WORLD GAR-14:04 ;', 'POS W/D PAK N SAVE IN-16:44 ;', 'POS W/D SANDFLY
+          CAFE -10:40 ;', 'POS W/D FERGBURGER FE-15:02 ;', 'POS W/D MRS FERG MRS -13:24
+          ;', 'POS W/D LAKESIDE SERV-10:27 ;', 'POS W/D PAK N SAVE QU-16:03 ;', PAK
+          N SAVE FUEL QUEENSTOW PAK N SAVE F ;, 'POS W/D ALCHEMY ALCHE-13:48 ;', 'POS
+          W/D BIGFOOT BAR R-20:00 ;', 'POS W/D PORKYS TAKEAW-16:28 ;', 'POS W/D NEW
+          WORLD HOK-16:37 ;', 'POS W/D BASE WOOD FIR-11:39 ;', NPD STANMORE ROAD NPD
+          STANMORE ROAD ;, 'POS W/D MR GRUMPYS TA-14:40 ;', MCFALL FUEL LTD-KIMBOLTON
+          MCFALL FUEL ;, 'POS W/D XY LIMITED XY-23:45 ;', 'POS W/D CAFE EXPRESS -15:44
+          ;']
   2019-07:
     Gifts:
       total: 50
       transactionList: ['POS W/D WELLESLEY STR-14:54 ;', IMPERIAL MINI SUPERMAR AUCKLAND
           NZ ;, WSL VICTORIA ST AKLD AUCKLAND ;, 'POS W/D LIQUOR PARK L-15:26 ;',
-        'POS W/D The Warehouse-12:56 ;']
+        'POS W/D The Warehouse-12:56 ;', 'POS W/D REAL GROOVY R-12:04 ;', 'POS W/D
+          LOOK SHARP ST-12:41 ;']
     Groceries:
       total: 400
       transactionList: [COUNTDOWN AKL METRO AUCKLAND ;, COUNTDOWN AKL CENTRAL AUCKLAND
@@ -154,12 +172,23 @@ months:
       transactionList: [PAY Annie ;, OLACABS RIDE PAYMENT AUCKLAND ;, DOMINO'S PIZZA
           - AUC AUCKLAND ;, 'POS W/D THE TANDOOR T-20:53 ;', BAR101 AUCKLAND ;, 'POS
           W/D MCDONALDS AIR-20:56 ;', PAY Annie ;curry curry curry, AROMA INDIAN CUISINE
-          NEWMARKET ;]
+          NEWMARKET ;, 'POS W/D CHEERS LIQUOR-20:09 ;', 'POS W/D ELLICE ROAD E-23:07
+          ;', 'POS W/D DING DONG LOU-23:38 ;']
     Trips:
       total: 81
       transactionList: [GULL KINGSLAND SPEEDLANE GULL KINGSLAN ;, Z MATAMATA Z MATAMATA
           ;, AT HOP AUCKLAND HENDERSON ;]
   2019-08:
+    Bills:
+      total: 50
+      transactionList: [VODAFONE PREPAY VISA MCAUCKLAND ;]
+    Frivolity:
+      total: 80
+      transactionList: [FATDODO CAFE AUCKLAND ;, 'POS W/D THAI DONUT LT-19:43 ;',
+        'POS W/D AQUA S AQUA S-20:26 ;']
+    Income:
+      total: 25
+      transactionList: []
     Transport:
       total: 30
       transactionList: [OLACABS RIDE PAYMENT AUCKLAND ;]
