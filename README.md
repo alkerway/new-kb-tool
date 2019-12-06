@@ -1,5 +1,5 @@
-# Kiwibank Tool
-An ugly interactive budgeting GUI for Kiwibank .csv statements. Mint.com doesn't work with New Zealand banks so I built my own personal poor man's version.
+# Personal Finance Tool
+An ugly interactive budgeting GUI for Kiwibank and ANZ bank statements. Mint.com doesn't work with New Zealand banks so I built my own personal poor man's version.
 
 ### Usage
 * Run `main.py`
