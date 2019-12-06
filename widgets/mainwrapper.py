@@ -4,11 +4,11 @@ from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLa
 from PySide2.QtGui import QFont, QCursor
 from PySide2.QtCore import Qt, SIGNAL
 
-from kbparsers import CSVParser
-from kbutils import clearLayout
-from kbwidgets.modals import CategoryModal
+from parsers import CSVParser
+from utils import clearLayout
+from widgets.modals import CategoryModal
 from .datadisplay import DataDisplay
-from kbstate import State, Events
+from state import State, Events
 
 boldFont = QFont()
 boldFont.setBold(True)
@@ -36,7 +36,7 @@ class MainWrapper(QWidget):
                 self.monthDecreaseButton.show()
 
     def getCsvFileName(self):
-        fname, success = QFileDialog.getOpenFileName(None, 'Open CSV Statement', '', 'CSV (*.csv *.CSV)')
+        fname, success = QFileDialog.getOpenFileName(None, 'Open CSV/XLSX Statement', '', 'CSV (*.csv *.CSV, *.xlsx)')
         if success:
             return fname
 
@@ -50,7 +50,6 @@ class MainWrapper(QWidget):
             allMonths.sort()
             self.monthsList = allMonths
             self.loadMonth(self.currentMonth)
-
 
 
     def addListeners(self):

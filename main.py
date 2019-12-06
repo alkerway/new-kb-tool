@@ -1,6 +1,6 @@
 import sys
 from PySide2.QtWidgets import QApplication, QMainWindow
-from kbwidgets import MainWrapper
+from widgets import MainWrapper
 
 def main():
     app = QApplication(sys.argv)

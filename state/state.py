@@ -1,6 +1,6 @@
 from .eventnames import Events
-from kbstate import Event
-from kbutils import ConfigUtil
+from state import Event
+from utils import ConfigUtil
 
 class State:
     def __init__(self):

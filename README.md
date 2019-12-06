@@ -12,4 +12,4 @@ An ugly interactive budgeting GUI for Kiwibank .csv statements. Mint.com doesn't
 * Cycle through months by clicking `<` or `>` by the month name
 
 ### Screenshot
-<img src="./kb-snap.png" alt="screenshot" width="300"/>
+<img src="app-snap.png" alt="screenshot" width="300"/>

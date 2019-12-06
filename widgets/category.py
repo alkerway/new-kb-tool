@@ -4,9 +4,9 @@ from PySide2.QtGui import QCursor
 
 from .progressbar import ProgressBar
 from .transactionline import TransactionLine
-from kbwidgets.modals import EditCategoryTotalModal, EditTextModal
-from kbutils import clearLayout
-from kbstate import Events
+from widgets.modals import EditCategoryTotalModal, EditTextModal
+from utils import clearLayout
+from state import Events
 
 class Category(QWidget):
     def __init__(self, name, categoryTotal, transactions, state):

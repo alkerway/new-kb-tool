@@ -1,6 +1,6 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout
 from copy import deepcopy
-from kbstate import Events
+from state import Events
 from .category import Category
 
 class DataDisplay(QWidget):
@@ -29,7 +29,6 @@ class DataDisplay(QWidget):
 
     def addCategory(self, data):
         cfg = self.state.getConfig()
-        print(data['title'], cfg['months'][self.month])
         if not data['title'] in cfg['months'][self.month]:
             amt = int(data['amt'])
             cfg['months'][self.month][data['title']] = {
@@ -44,7 +43,6 @@ class DataDisplay(QWidget):
             else:
                 for i, section in enumerate(self.sectionState):
                     if int(section['total']) < amt:
-                        print(section, amt, i)
                         idx = i
                         break
 
@@ -60,10 +58,13 @@ class DataDisplay(QWidget):
 
     def constructCategories(self, transactionList, monthCode, prevCode):
         config = self.state.getConfig()
-        if not monthCode in config['months']:
-            prevCode = prevCode if prevCode else max(list(config['months'].keys()))
-            # config option?
-            config['months'][monthCode] = deepcopy(config['months'][prevCode])
+        if monthCode not in config['months']:
+            if not config['months']:
+                config['months'][monthCode] = {}
+            else:
+                prevCode = prevCode if prevCode else max(list(config['months'].keys()))
+                # config option?
+                config['months'][monthCode] = deepcopy(config['months'][prevCode])
 
         formattedSections = {
             'uncategorized': {
