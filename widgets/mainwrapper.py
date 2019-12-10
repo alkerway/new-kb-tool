@@ -22,9 +22,11 @@ class MainWrapper(QWidget):
         self.addListeners()
         self.buildUI()
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        # self.loadNewFile()
 
     def loadNewFile(self):
         fileName = self.getCsvFileName()
+        # fileName = '/home/aw/Documents/w/py/pf-tool/act.csv'
         if fileName:
             parser = CSVParser()
             self.transactionMap = parser.parseCsv(fileName)
@@ -34,6 +36,7 @@ class MainWrapper(QWidget):
             self.loadMonth(allMonths[-1])
             if len(allMonths) > 1:
                 self.monthDecreaseButton.show()
+            self.addMetricsButton()
 
     def getCsvFileName(self):
         fname, success = QFileDialog.getOpenFileName(None, 'Open CSV/XLSX Statement', '', 'CSV (*.csv *.CSV, *.xlsx)')
@@ -138,6 +141,10 @@ class MainWrapper(QWidget):
                      self.chooseFileContextMenu)
         self.chooseFileButton.setMaximumWidth(90)
 
+        self.metricsButton = QPushButton('metrics')
+        self.metricsButton.clicked.connect(self.openMetrics)
+        self.metricsButton.setMaximumWidth(80)
+
         self.titleLayout = QHBoxLayout()
         self.titleLayout.addWidget(self.appTitle)
         self.titleLayout.addWidget(self.chooseFileButton)
@@ -222,6 +229,14 @@ class MainWrapper(QWidget):
             addStatementAction.triggered.connect(self.addFile)
             menu.addAction(addStatementAction)
             menu.exec_(QCursor.pos())
+
+    def openMetrics(self):
+        print('open')
+
+    def addMetricsButton(self):
+        self.titleLayout.removeWidget(self.chooseFileButton)
+        self.titleLayout.addWidget(self.metricsButton)
+        self.titleLayout.addWidget(self.chooseFileButton)
 
     def closeApp(self):
         sys.exit()
