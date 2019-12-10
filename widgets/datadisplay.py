@@ -1,4 +1,5 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout
+from functools import cmp_to_key
 from copy import deepcopy
 from state import Events
 from .category import Category
@@ -88,7 +89,7 @@ class DataDisplay(QWidget):
                     if not category in formattedSections.keys():
                         formattedSections[category] = {
                             'tList': [],
-                            'total': config['months'][monthCode][category]['total']
+                            'total': 0
                         }
                     if transaction.name in transactionList:
                         foundCategory = True
@@ -96,9 +97,17 @@ class DataDisplay(QWidget):
                         formattedSections[category]['total'] += transaction.amt
                 if not foundCategory:
                     formattedSections['uncategorized']['tList'].append(transaction)
+                    formattedSections['uncategorized']['total'] += transaction.amt
 
-        categoryKeys = list(formattedSections.keys())
-        categoryKeys.sort(key=lambda x: formattedSections[x]['total'], reverse=True)
+        def sortSection(x, y):
+            if x == 'Income':
+                return 1
+            if x == 'uncategorized':
+                return -1
+            if formattedSections[x]['total'] < formattedSections[y]['total']:
+                return -1
+            return 1
+        categoryKeys = sorted(list(formattedSections.keys()), key=cmp_to_key(sortSection), reverse=True)
         sectionsUI = []
         self.sectionState = []
         incomeCategory = None
@@ -112,7 +121,7 @@ class DataDisplay(QWidget):
                     }
             elif category == 'uncategorized':
                 self.sectionState.append({'name': 'Uncategorized', 'total': '0'})
-                sectionsUI.append(Category('Uncategorized', '0', formattedSections['uncategorized']['tList'], self.state))
+                sectionsUI.append(Category('Uncategorized', 0, formattedSections['uncategorized']['tList'], self.state))
             else:
                 catTotal = config['months'][monthCode][category]['total']
                 self.sectionState.append({'name': category, 'total': catTotal})

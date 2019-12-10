@@ -89,7 +89,7 @@ class MainWrapper(QWidget):
                 self.monthIncreaseButton.hide()
 
     def setTotalDisplay(self, transactionTotal, categoryTotal):
-        self.totalDisplay.setText('Total: $' + str(transactionTotal) + ' / ' + str(categoryTotal))
+        self.totalDisplay.setText('Total: ${} / {}'.format(transactionTotal, categoryTotal))
         if transactionTotal <= categoryTotal:
             self.totalDisplay.setStyleSheet("QLabel { color : darkGreen; }")
         else:

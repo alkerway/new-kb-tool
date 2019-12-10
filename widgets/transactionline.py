@@ -12,7 +12,7 @@ class TransactionLine(QWidget):
         self.tTitle.setMinimumWidth(290)
 
         tAmt = QLabel(self)
-        tAmt.setText(str(round(transaction.amt, 2)))
+        tAmt.setText('{:.2f}'.format(transaction.amt))
         tAmt.setAlignment(QtCore.Qt.AlignRight)
         tAmt.setMaximumWidth(52)
 

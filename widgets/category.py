@@ -11,7 +11,7 @@ from state import Events
 class Category(QWidget):
     def __init__(self, name, categoryTotal, transactions, state):
         ##
-        initialCollapsed = False
+        initialCollapsed = True
         ##
         QWidget.__init__(self)
         self.name = name
@@ -50,7 +50,7 @@ class Category(QWidget):
         self.progressBar.setToolTip('Edit Max')
 
         self.uncategorizedAmtDisplay = QLabel()
-        self.uncategorizedAmtDisplay.setText('$' + str(self.categoryTotal))
+        self.uncategorizedAmtDisplay.setText('${:.2f}'.format(self.categoryTotal))
         self.uncategorizedAmtDisplay.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
         header = QHBoxLayout()
