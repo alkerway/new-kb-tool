@@ -6,8 +6,9 @@ from PySide2.QtCore import Qt, SIGNAL
 
 from parsers import CSVParser
 from utils import clearLayout
-from widgets.modals import CategoryModal
+from .modals import CategoryModal
 from .datadisplay import DataDisplay
+from ..metrics import MainMetrics
 from state import State, Events
 
 boldFont = QFont()
@@ -18,15 +19,16 @@ class MainWrapper(QWidget):
     def __init__(self):
         super(MainWrapper, self).__init__()
         self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        self.metrics = None
         self.state = State()
         self.addListeners()
         self.buildUI()
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        # self.loadNewFile()
+        self.loadNewFile()
 
     def loadNewFile(self):
-        fileName = self.getCsvFileName()
-        # fileName = '/home/aw/Documents/w/py/pf-tool/act.csv'
+        # fileName = self.getCsvFileName()
+        fileName = '/home/aw/Documents/w/py/pf-tool/act.csv'
         if fileName:
             parser = CSVParser()
             self.transactionMap = parser.parseCsv(fileName)
@@ -143,6 +145,7 @@ class MainWrapper(QWidget):
 
         self.metricsButton = QPushButton('metrics')
         self.metricsButton.clicked.connect(self.openMetrics)
+        self.metricsButton.setShortcut('Ctrl+M')
         self.metricsButton.setMaximumWidth(80)
 
         self.titleLayout = QHBoxLayout()
@@ -231,7 +234,10 @@ class MainWrapper(QWidget):
             menu.exec_(QCursor.pos())
 
     def openMetrics(self):
-        print('open')
+        if not self.metrics:
+            self.metrics = MainMetrics()
+        self.metrics.show()
+        self.metrics.loadData(self.transactionMap)
 
     def addMetricsButton(self):
         self.titleLayout.removeWidget(self.chooseFileButton)

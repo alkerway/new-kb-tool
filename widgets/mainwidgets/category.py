@@ -4,7 +4,7 @@ from PySide2.QtGui import QCursor
 
 from .progressbar import ProgressBar
 from .transactionline import TransactionLine
-from widgets.modals import EditCategoryTotalModal, EditTextModal
+from widgets.mainwidgets.modals import EditCategoryTotalModal, EditTextModal
 from utils import clearLayout
 from state import Events
 
