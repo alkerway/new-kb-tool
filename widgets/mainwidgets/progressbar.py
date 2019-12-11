@@ -21,7 +21,7 @@ class ProgressBar(QProgressBar):
         if not greenColor:
             palette.setColor(QPalette.Highlight, QColor(Qt.darkGreen))
         else:
-            palette.setColor(QPalette.Highlight, QColor(Qt.darkRed))
+            palette.setColor(QPalette.Highlight, QColor(244, 67, 54, 255))
         self.setPalette(palette)
         self.setRange(0, max(value, int(maxVal)))
         self.setFormat('$' + str(round(value, 2)) + ' / ' + str(maxVal))

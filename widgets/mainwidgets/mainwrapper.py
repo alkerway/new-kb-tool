@@ -24,11 +24,11 @@ class MainWrapper(QWidget):
         self.addListeners()
         self.buildUI()
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        self.loadNewFile()
+        # self.loadNewFile()
 
     def loadNewFile(self):
-        # fileName = self.getCsvFileName()
-        fileName = '/home/aw/Documents/w/py/pf-tool/act.csv'
+        fileName = self.getCsvFileName()
+        # fileName = '/home/aw/Documents/w/py/pf-tool/act.csv'
         if fileName:
             parser = CSVParser()
             self.transactionMap = parser.parseCsv(fileName)
@@ -98,7 +98,7 @@ class MainWrapper(QWidget):
         if transactionTotal <= categoryTotal:
             self.totalDisplay.setStyleSheet("QLabel { color : darkGreen; }")
         else:
-            self.totalDisplay.setStyleSheet("QLabel { color : darkRed; }")
+            self.totalDisplay.setStyleSheet("QLabel { color : rgba(244, 67, 54, 255); }")
 
     def buildUI(self):
         self.closeButton = QPushButton('close')
