@@ -103,7 +103,7 @@ class MainWrapper(QWidget):
     def buildUI(self):
         self.closeButton = QPushButton('close')
         self.closeButton.setShortcut('Ctrl+W')
-        self.closeButton.clicked.connect(self.closeApp)
+        self.closeButton.clicked.connect(self.onClose)
         self.closeButton.setFixedSize(0, 0)
 
         self.buildTitleLayout()
@@ -244,6 +244,6 @@ class MainWrapper(QWidget):
         self.titleLayout.addWidget(self.metricsButton)
         self.titleLayout.addWidget(self.chooseFileButton)
 
-    def closeApp(self):
+    def onClose(self):
         sys.exit()
 
