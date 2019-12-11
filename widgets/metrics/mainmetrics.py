@@ -4,8 +4,9 @@ from PyQt5.QtWidgets import QMainWindow
 from .historymetrics import HistoryMetrics
 
 class MainMetrics(QMainWindow):
-    def __init__(self):
+    def __init__(self, allData={}):
         super().__init__()
+        self.allData = allData
         pg.setConfigOption('background', 'w')
         pg.setConfigOption('foreground', 'k')
         pg.setConfigOptions(antialias=True)
@@ -15,16 +16,18 @@ class MainMetrics(QMainWindow):
         self.buildUI()
 
     def loadData(self, data):
-        print(data)
+        self.allData = data
+        self.buildUI()
 
     def getHistoryTab(self):
-        historyLayout = HistoryMetrics()
+        self.historyLayout = HistoryMetrics(self.allData)
         historyTabWidget = QtGui.QWidget()
-        historyTabWidget.setLayout(historyLayout)
+        historyTabWidget.setLayout(self.historyLayout)
         return historyTabWidget
 
     def getCategoriesTab(self):
-        pass
+        label = QtGui.QLabel('ayyy')
+        return label
 
     def buildUI(self):
         self.metricsWrapperWidget = QtGui.QWidget()

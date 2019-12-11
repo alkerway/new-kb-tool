@@ -235,9 +235,9 @@ class MainWrapper(QWidget):
 
     def openMetrics(self):
         if not self.metrics:
-            self.metrics = MainMetrics()
+            self.metrics = MainMetrics(self.transactionMap)
         self.metrics.show()
-        self.metrics.loadData(self.transactionMap)
+        # self.metrics.loadData(self.transactionMap)
 
     def addMetricsButton(self):
         self.titleLayout.removeWidget(self.chooseFileButton)
