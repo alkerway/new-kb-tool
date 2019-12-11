@@ -3,7 +3,7 @@ class ConfigUtil():
     def getConfig(self):
         try:
             with open('config.yaml', 'r') as stream:
-                cfg = yaml.load(stream)
+                cfg = yaml.full_load(stream)
                 return cfg
         except FileNotFoundError:
             with open('config.yaml', 'w+') as stream:
