@@ -7,3 +7,4 @@ class Events:
     update_category_title = 'update_category_title'
     update_total = 'update_total'
     add_category = 'add_category'
+    metrics_close = 'metrics_close'

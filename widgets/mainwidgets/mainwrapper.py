@@ -59,6 +59,7 @@ class MainWrapper(QWidget):
 
     def addListeners(self):
         self.state.addSubscriber(Events.update_total, self.setTotalDisplay)
+        self.state.addSubscriber(Events.metrics_close, self.onMetricsClose)
 
     def loadMonth(self, monthText):
         monthNumber = int(monthText.split('-')[1])
@@ -235,9 +236,14 @@ class MainWrapper(QWidget):
 
     def openMetrics(self):
         if not self.metrics:
-            self.metrics = MainMetrics(self.transactionMap)
+            self.metrics = MainMetrics(self.state, self.transactionMap)
         self.metrics.show()
-        # self.metrics.loadData(self.transactionMap)
+        self.metrics.activateWindow()
+
+    def onMetricsClose(self):
+        self.metrics.hide()
+        self.metrics.deleteLater()
+        self.metrics = None
 
     def addMetricsButton(self):
         self.titleLayout.removeWidget(self.chooseFileButton)

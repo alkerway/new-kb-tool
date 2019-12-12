@@ -14,7 +14,6 @@ class HistoryMetrics(QHBoxLayout):
         fig = Figure(dpi=72, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
         axis = fig.add_subplot(111)
         axis.bar(xValues, yValues, tick_label=xLabels, color=(67/255, 160/255, 71/255))
-        axis.bar(xValues, yValues, tick_label=xLabels, color=(67 / 255, 160 / 255, 71 / 255))
         axis.set_ylabel('$')
         axis.set_xlabel('Month')
         canvas = FigureCanvas(fig)
