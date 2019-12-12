@@ -1,6 +1,7 @@
 from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QTabWidget, QVBoxLayout, QMainWindow, QDateEdit, QHBoxLayout
 from PySide2 import QtCore
 from .historymetrics import HistoryMetrics
+from .categorymetrics import CategoryMetrics
 from datetime import date
 
 from state import State, Events
@@ -27,8 +28,10 @@ class MainMetrics(QMainWindow):
         return historyTabWidget
 
     def getCategoriesTab(self):
-        label = QLabel('ayyy')
-        return label
+        self.categoriesLayout = CategoryMetrics(self.state, self.allData)
+        categoriesTabWidget = QWidget()
+        categoriesTabWidget.setLayout(self.categoriesLayout)
+        return categoriesTabWidget
 
     def buildUI(self):
         self.metricsWrapperWidget = QWidget()
@@ -41,8 +44,8 @@ class MainMetrics(QMainWindow):
         self.historyTab = self.getHistoryTab()
         self.categoriesTab = self.getCategoriesTab()
 
-        self.tabWidget.addTab(self.historyTab, "History")
         self.tabWidget.addTab(self.categoriesTab, "Categories")
+        self.tabWidget.addTab(self.historyTab, "History")
 
         self.tabLayout.addWidget(self.dateRangeContainer)
         self.tabLayout.addWidget(self.tabWidget, 0, 0)
@@ -107,6 +110,7 @@ class MainMetrics(QMainWindow):
             newData[key] = list(filter(lambda t: t.date >= startDate and t.date <= endDate, self.allData[key]))
         self.dataSubset = newData
         self.historyLayout.updateData(self.dataSubset)
+        self.categoriesLayout.updateData(self.dataSubset)
 
 
 
