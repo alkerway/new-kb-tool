@@ -53,7 +53,7 @@ class MainMetrics(QMainWindow):
     def getDateRangeWidget(self, minDate, maxDate):
         dateRange = QDateEdit()
         dateRange.setCalendarPopup(True)
-        dateRange.setDisplayFormat('dd/MM/yyyy')
+        dateRange.setDisplayFormat('MMM d yy')
         dateRange.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         dateRange.setMaximumDate(maxDate)
         dateRange.setMinimumDate(minDate)
