@@ -1,6 +1,4 @@
 from PySide2.QtWidgets import QHBoxLayout
-import matplotlib
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
@@ -14,10 +12,11 @@ class HistoryMetrics(QHBoxLayout):
     def createPlot(self):
         xValues, xLabels, yValues = self.parseData(self.allData)
         fig = Figure(dpi=72, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
-        ax = fig.add_subplot(111)
-        ax.bar(xValues, yValues, tick_label=xLabels)
-        ax.set_ylabel('$')
-        ax.set_xlabel('Month')
+        axis = fig.add_subplot(111)
+        axis.bar(xValues, yValues, tick_label=xLabels, color=(67/255, 160/255, 71/255))
+        axis.bar(xValues, yValues, tick_label=xLabels, color=(67 / 255, 160 / 255, 71 / 255))
+        axis.set_ylabel('$')
+        axis.set_xlabel('Month')
         canvas = FigureCanvas(fig)
         self.addWidget(canvas)
 
@@ -29,7 +28,7 @@ class HistoryMetrics(QHBoxLayout):
         for idx in range(len(months)):
             key = months[idx]
             transactions = data[key]
-            sumTransactions = -self.getSumTransactions(transactions)
+            sumTransactions = self.getSumTransactions(transactions)
             xLabels.append(self.getMonthDisplay(key))
             xValues.append(idx)
             yValues.append(sumTransactions)

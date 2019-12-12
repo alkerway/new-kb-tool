@@ -19,7 +19,7 @@ class ProgressBar(QProgressBar):
         palette = QPalette(self.palette())
         greenColor = value > int(maxVal) if not self.isIncome else value < int(maxVal)
         if not greenColor:
-            palette.setColor(QPalette.Highlight, QColor(Qt.darkGreen))
+            palette.setColor(QPalette.Highlight, QColor(67,160,71))
         else:
             palette.setColor(QPalette.Highlight, QColor(244, 67, 54, 255))
         self.setPalette(palette)
