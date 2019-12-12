@@ -24,11 +24,9 @@ class MainWrapper(QWidget):
         self.addListeners()
         self.buildUI()
         self.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        self.loadNewFile()
 
     def loadNewFile(self):
-        # fileName = self.getCsvFileName()
-        fileName = '/home/aw/Documents/w/py/pf-tool/act.csv'
+        fileName = self.getCsvFileName()
         if fileName:
             parser = CSVParser()
             self.transactionMap = parser.parseCsv(fileName)

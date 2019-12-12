@@ -44,8 +44,8 @@ class MainMetrics(QMainWindow):
         self.historyTab = self.getHistoryTab()
         self.categoriesTab = self.getCategoriesTab()
 
-        self.tabWidget.addTab(self.categoriesTab, "Categories")
         self.tabWidget.addTab(self.historyTab, "History")
+        self.tabWidget.addTab(self.categoriesTab, "Categories")
 
         self.tabLayout.addWidget(self.dateRangeContainer)
         self.tabLayout.addWidget(self.tabWidget, 0, 0)

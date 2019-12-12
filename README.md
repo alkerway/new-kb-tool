@@ -17,4 +17,5 @@ An ugly interactive budgeting GUI for Kiwibank and ANZ bank statements. Mint.com
 
 ### Metrics
 
-<img src="metrics-snap.png" alt="screenshot" width="500"/>
+<img src="his-snap.png" alt="screenshot" width="500"/>
+<img src="cat-snap.png" alt="screenshot" width="500"/>

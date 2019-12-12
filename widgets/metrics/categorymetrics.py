@@ -14,14 +14,16 @@ class CategoryMetrics(QHBoxLayout):
         self.axis = fig.add_subplot(111)
         self.canvas = FigureCanvas(fig)
         amounts, labels = self.parseData(self.data)
-        self.axis.pie(amounts, labels=labels)
+        self.axis.pie(amounts, labels=labels, shadow=True)
         self.addWidget(self.canvas)
 
     def parseData(self, data):
         categoryList = self.getCategorieslist()
+        labels = list(categoryList.keys())
+        labels = ['{} (${:.0f})'.format(k, categoryList[k]) for k in labels]
         totalAmount = sum(list(categoryList.values()))
-        labels = [a/totalAmount for a in list(categoryList.values())]
-        return labels, categoryList.keys()
+        proportionalCategories = [a/totalAmount for a in list(categoryList.values())]
+        return proportionalCategories, labels
 
     def getCategorieslist(self):
         config = self.state.getConfig()

@@ -54,7 +54,7 @@ class HistoryMetrics(QVBoxLayout):
         for idx in range(len(months)):
             key = months[idx]
             transactions = data[key]
-            sumTransactions = 54 # self.getSumTransactions(transactions, months[idx])
+            sumTransactions = self.getSumTransactions(transactions, months[idx])
             xLabels.append(self.getMonthDisplay(key))
             xValues.append(idx)
             yValues.append(sumTransactions)
