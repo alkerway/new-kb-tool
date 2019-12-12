@@ -1,15 +1,10 @@
-from pyqtgraph.Qt import QtGui
-import pyqtgraph as pg
-from PyQt5.QtWidgets import QMainWindow
+from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QTabWidget, QGridLayout, QMainWindow
 from .historymetrics import HistoryMetrics
 
 class MainMetrics(QMainWindow):
     def __init__(self, allData={}):
         super().__init__()
         self.allData = allData
-        pg.setConfigOption('background', 'w')
-        pg.setConfigOption('foreground', 'k')
-        pg.setConfigOptions(antialias=True)
         self.setMinimumWidth(900)
         self.setMinimumHeight(500)
         self.setWindowTitle("metrics")
@@ -21,19 +16,19 @@ class MainMetrics(QMainWindow):
 
     def getHistoryTab(self):
         self.historyLayout = HistoryMetrics(self.allData)
-        historyTabWidget = QtGui.QWidget()
+        historyTabWidget = QWidget()
         historyTabWidget.setLayout(self.historyLayout)
         return historyTabWidget
 
     def getCategoriesTab(self):
-        label = QtGui.QLabel('ayyy')
+        label = QLabel('ayyy')
         return label
 
     def buildUI(self):
-        self.metricsWrapperWidget = QtGui.QWidget()
+        self.metricsWrapperWidget = QWidget()
         self.setCentralWidget(self.metricsWrapperWidget)
-        self.tabLayout = QtGui.QGridLayout(self.metricsWrapperWidget)
-        self.tabWidget = QtGui.QTabWidget()
+        self.tabLayout = QGridLayout()
+        self.tabWidget = QTabWidget()
 
 
         self.historyTab = self.getHistoryTab()
@@ -48,7 +43,7 @@ class MainMetrics(QMainWindow):
         self.metricsWrapperWidget.setLayout(self.tabLayout)
 
     def buildCloseButton(self):
-        closeButton = QtGui.QPushButton('close')
+        closeButton = QPushButton('close')
         closeButton.setShortcut('Ctrl+W')
         closeButton.clicked.connect(self.onClose)
         closeButton.setFixedSize(0, 0)

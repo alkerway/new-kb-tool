@@ -1,26 +1,25 @@
-from pyqtgraph.Qt import QtGui, QtCore
-import pyqtgraph as pg
+from PySide2.QtWidgets import QHBoxLayout
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 
-class HistoryMetrics(QtGui.QHBoxLayout):
+class HistoryMetrics(QHBoxLayout):
     def __init__(self, allData):
         super().__init__()
+        self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         self.allData = allData
-        self.graphicsWindow = pg.GraphicsWindow(title="test graphics wiondow")
-        self.addWidget(self.graphicsWindow)
         self.createPlot()
 
     def createPlot(self):
         xValues, xLabels, yValues = self.parseData(self.allData)
-        x = xValues
-        y = yValues
-        # create bar chart
-        print(xLabels)
-        stringaxis = pg.AxisItem(orientation='bottom')
-        stringaxis.setTicks(xLabels)
-        plot1 = self.graphicsWindow.addPlot(axisItems={'bottom': stringaxis})
-        plot1.setMouseEnabled(x=False, y=False)
-        barGraph = pg.BarGraphItem(x=x, height=y, width=0.6, brush='b')
-        plot1.addItem(barGraph)
+        fig = Figure(dpi=72, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
+        ax = fig.add_subplot(111)
+        ax.bar(xValues, yValues, tick_label=xLabels)
+        ax.set_ylabel('$')
+        ax.set_xlabel('Month')
+        canvas = FigureCanvas(fig)
+        self.addWidget(canvas)
 
     def parseData(self, data):
         xLabels = []
@@ -30,8 +29,8 @@ class HistoryMetrics(QtGui.QHBoxLayout):
         for idx in range(len(months)):
             key = months[idx]
             transactions = data[key]
-            sumTransactions = self.getSumTransactions(transactions)
-            xLabels.append(key)
+            sumTransactions = -self.getSumTransactions(transactions)
+            xLabels.append(self.getMonthDisplay(key))
             xValues.append(idx)
             yValues.append(sumTransactions)
         return (xValues, xLabels, yValues)
@@ -39,3 +38,7 @@ class HistoryMetrics(QtGui.QHBoxLayout):
     def getSumTransactions(self, transactions, income=False):
         # filter income etc
         return sum([i.amt for i in transactions if not i.isCredit])
+
+    def getMonthDisplay(self, monthStr):
+        year, month = monthStr.split('-')
+        return '{:.3} \'{}'.format(self.monthNames[int(month) - 1], year[2:])
