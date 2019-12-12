@@ -1,19 +1,35 @@
-from PySide2.QtWidgets import QHBoxLayout
+from PySide2.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from functools import reduce
 
-class HistoryMetrics(QHBoxLayout):
-    def __init__(self, data):
+class HistoryMetrics(QVBoxLayout):
+    def __init__(self, state, data):
         super().__init__()
         self.monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        self.state = state
         self.data = data
         self.canvas = None
+        self.createCategoryDropdown()
         self.createPlot()
 
     def updateData(self, newData):
         self.data = newData
         self.canvas.deleteLater()
         self.createPlot()
+
+    def createCategoryDropdown(self):
+        dropdownWrapperLayout = QHBoxLayout()
+        dropdown = QComboBox()
+        dropdown.addItem('All Expenses')
+        dropdown.addItem('All Income')
+        allCategories = self.getOrderedCategories()
+        for category in allCategories:
+            dropdown.addItem(category)
+        dropdown.setMaximumWidth(200)
+        dropdownWrapperLayout.addWidget(dropdown)
+        self.addLayout(dropdownWrapperLayout)
+
 
     def createPlot(self):
         fig = Figure(dpi=72, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
@@ -46,3 +62,17 @@ class HistoryMetrics(QHBoxLayout):
     def getMonthDisplay(self, monthStr):
         year, month = monthStr.split('-')
         return '{:.3} \'{}'.format(self.monthNames[int(month) - 1], year[2:])
+
+    def getOrderedCategories(self):
+        config = self.state.getConfig()
+        frequencies = {}
+        categories = []
+        for month in list(config['months'].keys()):
+            for category in list(config['months'][month].keys()):
+                if category not in categories:
+                    categories.append(category)
+                    frequencies[category] = 1
+                else:
+                    frequencies[category] += 1
+        categories.sort(key=lambda c: frequencies[c], reverse=True)
+        return categories

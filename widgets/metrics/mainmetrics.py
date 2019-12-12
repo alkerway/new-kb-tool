@@ -21,7 +21,7 @@ class MainMetrics(QMainWindow):
         self.buildUI()
 
     def getHistoryTab(self):
-        self.historyLayout = HistoryMetrics(self.allData)
+        self.historyLayout = HistoryMetrics(self.state, self.allData)
         historyTabWidget = QWidget()
         historyTabWidget.setLayout(self.historyLayout)
         return historyTabWidget
