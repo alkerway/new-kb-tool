@@ -1,6 +1,8 @@
 from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QTabWidget, QVBoxLayout, QMainWindow, QDateEdit, QHBoxLayout
 from PySide2 import QtCore
 from .historymetrics import HistoryMetrics
+from datetime import date
+
 from state import State, Events
 
 class MainMetrics(QMainWindow):
@@ -8,6 +10,7 @@ class MainMetrics(QMainWindow):
         super().__init__()
         self.state = state
         self.allData = allData
+        self.dataSubset = allData
         self.setMinimumWidth(900)
         self.setMinimumHeight(500)
         self.setWindowTitle("metrics")
@@ -60,7 +63,6 @@ class MainMetrics(QMainWindow):
         dateRangeLine = QWidget()
         dateRangeContainer = QHBoxLayout()
         minDate, maxDate = self.getFirstAndLastTransactionDates()
-        print(minDate)
         self.startDatePicker = self.getDateRangeWidget(minDate, maxDate)
         self.startDatePicker.setDate(minDate)
         self.endDatePicker = self.getDateRangeWidget(minDate, maxDate)
@@ -91,7 +93,23 @@ class MainMetrics(QMainWindow):
         return QtCore.QDate(minDate.year, minDate.month, minDate.day), QtCore.QDate(maxDate.year, maxDate.month, maxDate.day)
 
     def updateDates(self):
-        print('ayyy')
+        newData = {}
+        qStartDate = self.startDatePicker.date()
+        qEndDate = self.endDatePicker.date()
+        startDate = date(qStartDate.year(), qStartDate.month(), qStartDate.day())
+        endDate = date(qEndDate.year(), qEndDate.month(), qEndDate.day())
+        for key in list(self.allData.keys()):
+            keyYear, keyMonth = [int(k) for k in key.split('-')]
+            if keyYear < startDate.year or keyYear > endDate.year:
+                continue
+            if keyMonth < startDate.month or keyMonth > endDate.month:
+                continue
+            newData[key] = list(filter(lambda t: t.date >= startDate and t.date <= endDate, self.allData[key]))
+        self.dataSubset = newData
+        self.historyLayout.updateData(self.dataSubset)
+
+
+
 
     def buildCloseButton(self):
         closeButton = QPushButton('close')
