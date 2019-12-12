@@ -39,7 +39,7 @@ class HistoryMetrics(QVBoxLayout):
     def createPlot(self):
         fig = Figure(dpi=72, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
         self.axis = fig.add_subplot(111)
-        self.axis.set_ylabel('$')
+        self.axis.set_ylabel('$ {}'.format(self.currentCategory))
         self.axis.set_xlabel('Month')
         self.canvas = FigureCanvas(fig)
         xValues, xLabels, yValues = self.parseData(self.allData)
