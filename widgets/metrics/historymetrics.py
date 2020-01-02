@@ -1,7 +1,10 @@
-from PySide2.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox
+from PySide2.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QLabel
+from PySide2.QtCore import QTimer
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from functools import reduce
+import time
+from utils import SeparateThread
 
 class HistoryMetrics(QVBoxLayout):
     def __init__(self, state, allData):
@@ -42,9 +45,15 @@ class HistoryMetrics(QVBoxLayout):
         self.axis.set_ylabel('$ {}'.format(self.currentCategory))
         self.axis.set_xlabel('Month')
         self.canvas = FigureCanvas(fig)
-        xValues, xLabels, yValues = self.parseData(self.allData)
-        self.axis.bar(xValues, yValues, tick_label=xLabels, color=(67 / 255, 160 / 255, 71 / 255))
-        self.addWidget(self.canvas)
+
+        def on_finished(args):
+            xValues, xLabels, yValues = args
+            self.axis.bar(xValues, yValues, tick_label=xLabels, color=(67 / 255, 160 / 255, 71 / 255))
+            self.addWidget(self.canvas)
+
+        extraThread = SeparateThread(self)
+        extraThread.finished.connect(on_finished)
+        extraThread.startFunc(self.parseData, self.allData)
 
     def parseData(self, data):
         xLabels = []

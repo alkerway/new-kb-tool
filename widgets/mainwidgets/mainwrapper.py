@@ -1,11 +1,11 @@
-import sys
+import sys, time
 
 from PySide2.QtWidgets import QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QFileDialog, QMenu, QAction, QSizePolicy
 from PySide2.QtGui import QFont, QCursor
 from PySide2.QtCore import Qt, SIGNAL
 
 from parsers import CSVParser
-from utils import clearLayout
+from utils import clearLayout, SeparateThread
 from .modals import CategoryModal
 from .datadisplay import DataDisplay
 from ..metrics import MainMetrics
@@ -250,4 +250,23 @@ class MainWrapper(QWidget):
 
     def onClose(self):
         sys.exit()
+
+    def startWorker(self):
+        def on_finished(data):
+            print(f'FINISHED {data}')
+
+        def processFunction(range1):
+            print('starting process function')
+            time.sleep(range1)
+            return (f'done {range1} seconds')
+
+        extraThread = SeparateThread(self)
+        extraThread.finished.connect(on_finished)
+        extraThread.startFunc(processFunction, 5)
+
+        limit = 5
+        while limit > 0:
+            time.sleep(0.5)
+            print(limit)
+            limit -= 1
 

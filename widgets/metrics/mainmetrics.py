@@ -112,9 +112,6 @@ class MainMetrics(QMainWindow):
         self.historyLayout.updateData(self.dataSubset)
         self.categoriesLayout.updateData(self.dataSubset)
 
-
-
-
     def buildCloseButton(self):
         closeButton = QPushButton('close')
         closeButton.setShortcut('Ctrl+W')
