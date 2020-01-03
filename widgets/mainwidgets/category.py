@@ -36,6 +36,7 @@ class Category(QWidget):
         # self.headerText.setFont(self.boldFont)
         self.headerText.setCursor(Qt.PointingHandCursor)
         self.headerText.mousePressEvent = self.toggleCollapsed
+        self.headerText.setMinimumWidth(100)
 
         self.collapseButton = QLabel()
         self.collapseButton.setText('⊞' if self.collapsed else '⊟')
@@ -94,6 +95,7 @@ class Category(QWidget):
         self.transactionArea.setParent(None)
         self.transactionArea = QScrollArea()
         self.transactionArea.setWidget(self.gridContainer)
+        self.transactionArea.setWidgetResizable(True)
         if self.collapsed:
             self.transactionArea.hide()
 

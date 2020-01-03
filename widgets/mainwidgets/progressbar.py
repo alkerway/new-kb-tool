@@ -11,7 +11,6 @@ class ProgressBar(QProgressBar):
     def __init__(self, isIncome=False):
         QProgressBar.__init__(self)
         self.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.setMaximumWidth(300)
         self.isIncome = isIncome
 
     def updateValues(self, maxVal, value):

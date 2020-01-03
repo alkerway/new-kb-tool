@@ -204,10 +204,6 @@ class MainWrapper(QWidget):
         self.categoryHeaderWidget = QWidget()
         self.categoryHeaderWidget.setLayout(self.categoryHeaderLayout)
 
-        minSize = self.categoryHeaderLayout.minimumSize()
-        minSize.setWidth(450)
-        self.categoryHeaderWidget.setMaximumSize(minSize)
-
     def promptAddCategory(self):
         modal = CategoryModal()
         data = modal.getData()

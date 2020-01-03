@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox
+from PySide2.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QApplication
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from functools import reduce
@@ -54,6 +54,7 @@ class HistoryMetrics(QVBoxLayout):
         for idx in range(len(months)):
             key = months[idx]
             transactions = data[key]
+            QApplication.processEvents()
             sumTransactions = self.getSumTransactions(transactions, months[idx])
             xLabels.append(self.getMonthDisplay(key))
             xValues.append(idx)
